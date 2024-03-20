@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1709050378575,
+      "tag": "0000_dusty_may_parker",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+    "name": "job-portal",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "build": "turbo run build",
+        "lint": "turbo run lint",
+        "dev": "turbo run dev",
+        "prepare": "husky"
+    },
+    "packageManager": "pnpm@8.15.3",
+    "volta": {
+        "node": "20.11.1"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^18.6.1",
+        "@commitlint/config-conventional": "^18.6.2",
+        "husky": "^9.0.11",
+        "prettier": "^3.2.5",
+        "turbo": "^1.12.4"
+    },
+    "author": "iroshahewage"
+}
