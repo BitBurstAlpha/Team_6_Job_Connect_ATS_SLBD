@@ -16,6 +16,7 @@ export const RegisterUserSchema = object({
         }).min(6),
     }).refine((data) => data.password === data.confirmPassword, {
         path: ['confirmPassword'],
+        message: 'password and confirm password do not match',
     }),
 });
 

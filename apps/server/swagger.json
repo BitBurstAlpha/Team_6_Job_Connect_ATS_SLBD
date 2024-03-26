@@ -1,0 +1,144 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "LSBU Job Portal"
+    },
+    "paths": {
+        "/api/users/register": {
+            "post": {
+                "tags": ["Users", "Auth"],
+                "description": "candidate register api",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "username",
+                                    "email",
+                                    "password",
+                                    "confirmPassword"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "dilshan"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "dilshan@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "dilshan"
+                                    },
+                                    "confirmPassword": {
+                                        "type": "string",
+                                        "example": "dilshan"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "username": "dilshan",
+                                "email": "dilshan@example.com",
+                                "password": "dilshan",
+                                "confirmPassword": "dilshan"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "register new user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "user created successful"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": ["Auth"],
+                "description": "candidate login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["email", "password"],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "dilshan@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "dilshan"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "email": "dilshan@example.com",
+                                "password": "dilshan"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "login candidate user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "login success!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "invalid credentials"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        }
+    }
+}

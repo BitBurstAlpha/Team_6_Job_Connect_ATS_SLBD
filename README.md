@@ -6,7 +6,7 @@ Welcome to the Job Portal Project!
 
 ## 💻 Running Locally 💻
 
-Follow these Step!
+Follow these steps!
 
 1. Install [PNPM](https://pnpm.io/installation), [MySql](https://www.mysql.com/downloads/), [Nodejs](https://nodejs.org/en/download) or [Volta](https://docs.volta.sh/guide/getting-started)
 2. Create database called `job_portal`
