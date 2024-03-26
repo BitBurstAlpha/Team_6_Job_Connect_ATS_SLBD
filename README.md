@@ -1,7 +1,38 @@
 # Job Portal Project
 
-Welcome to the Job Portal Project! This project is designed to create a robust job portal using Express.js for the backend and TurboRepo for efficient management of multiple repositories.
+Welcome to the Job Portal Project!
 
-## Introduction
+## Installation
 
-The Job Portal Project is a web application that aims to provide a comprehensive platform for job seekers and employers. Built with Express.js for the backend, it ensures a scalable and performant solution. TurboRepo is employed to manage the various repositories associated with this project.
+## 💻 Running Locally 💻
+
+Follow these Step!
+
+1. Install [PNPM](https://pnpm.io/installation), [MySql](https://www.mysql.com/downloads/), [Nodejs](https://nodejs.org/en/download) or [Volta](https://docs.volta.sh/guide/getting-started)
+2. Create database called `job_portal`
+3. Clone the project repository.
+4. Navigate to the project directory.
+5. create `.env.` file in the server root folder and copy paste the content of `.env.sample`, and update necessary credentials.
+6. Install the packages.
+
+    ```bash
+        pnpm install
+    ```
+
+7. Run database migrations
+
+    ```bash
+       pnpm --filter server db:migrate
+    ```
+
+8. start the development server
+
+    ```bash
+        pnpm dev
+    ```
+
+9. start the drizzle studio
+
+    ```bash
+        pnpm db:studio
+    ```

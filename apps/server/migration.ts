@@ -2,10 +2,11 @@ import { drizzle } from 'drizzle-orm/mysql2';
 import { migrate } from 'drizzle-orm/mysql2/migrator';
 import mysql from 'mysql2/promise';
 import { logger } from './src/utils/logger';
+import 'dotenv/config';
 
 async function migrateDB() {
     const connection = await mysql.createConnection({
-        uri: 'mysql://root:irosha@localhost:3306/job_portal',
+        uri: process.env.DATABASE_URL,
     });
 
     const db = drizzle(connection);

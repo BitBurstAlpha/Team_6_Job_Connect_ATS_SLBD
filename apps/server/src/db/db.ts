@@ -3,7 +3,7 @@ import { drizzle } from 'drizzle-orm/mysql2';
 import mysql from 'mysql2/promise';
 
 const poolConnection = mysql.createPool({
-    uri: 'mysql://root:irosha@localhost:3306/job_portal',
+    uri: process.env.DATABASE_URL,
 });
 
 export const db = drizzle(poolConnection, {
