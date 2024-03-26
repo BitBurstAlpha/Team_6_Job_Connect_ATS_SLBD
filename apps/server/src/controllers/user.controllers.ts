@@ -5,10 +5,10 @@ import { getUserByEmail, createUser } from '../services/user.services';
 import { RegisterUserInput } from '../schemas/user.schema';
 import { passwordHash } from '../utils/hashing';
 
-export async function UserRegisterHandler(
+export const UserRegisterHandler = async (
     req: Request<{}, {}, RegisterUserInput>,
     res: Response,
-) {
+) => {
     const { username, email, password } = req.body;
 
     const existedUser = await getUserByEmail(email);
@@ -36,4 +36,4 @@ export async function UserRegisterHandler(
     return res.status(StatusCodes.BAD_REQUEST).json({
         msg: 'something went wrong',
     });
-}
+};
