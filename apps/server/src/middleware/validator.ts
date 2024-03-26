@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { AnyZodObject } from 'zod';
+import { StatusCodes } from 'http-status-codes';
 
 const validator =
     (schema: AnyZodObject) =>
@@ -12,8 +13,14 @@ const validator =
             });
 
             next();
-        } catch (e: any) {
-            return res.status(400).send(e.errors);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                return res.status(StatusCodes.BAD_REQUEST).send(e.message);
+            }
+
+            return res
+                .status(StatusCodes.BAD_REQUEST)
+                .send('input validation error');
         }
     };
 
