@@ -24,6 +24,8 @@ module.exports = {
     },
     rules: {
         'no-console': 'error',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/ban-types': 'off',
     },
     ignorePatterns: ['**/*.js'],
 };

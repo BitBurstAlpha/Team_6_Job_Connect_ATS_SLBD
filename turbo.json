@@ -9,6 +9,9 @@
             "cache": false,
             "persistent": true
         },
+        "db:studio": {
+            "cache": false
+        },
         "lint": {}
     }
 }

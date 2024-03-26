@@ -4,5 +4,5 @@
         "rootDir": ".",
         "outDir": "./dist"
     },
-    "include": ["./src", "app.ts", "drizzle.config.ts", "migration.ts"]
+    "include": ["./src/**/*.ts", "app.ts", "drizzle.config.ts", "migration.ts"]
 }

@@ -6,6 +6,8 @@
         "target": "ES6",
         "module": "CommonJS",
         "sourceMap": true,
-        "noEmit": false
+        "noEmit": false,
+        "declaration": false,
+        "declarationMap": false
     }
 }

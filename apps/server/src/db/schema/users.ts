@@ -18,3 +18,5 @@ export const users = mysqlTable('users', {
     createdAt: timestamp('crated_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),
 });
+
+export type NewUser = typeof users.$inferInsert;

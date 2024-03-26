@@ -1,6 +1,7 @@
 import { drizzle } from 'drizzle-orm/mysql2';
 import { migrate } from 'drizzle-orm/mysql2/migrator';
 import mysql from 'mysql2/promise';
+import { logger } from './src/utils/logger';
 
 async function migrateDB() {
     const connection = await mysql.createConnection({
@@ -12,10 +13,10 @@ async function migrateDB() {
     try {
         await migrate(db, { migrationsFolder: 'drizzle/migrations' });
         await connection.end();
-        console.log('Migration Successful');
+        logger.info('Migration Successful');
         process.exit(0);
     } catch (err) {
-        console.log('Migration Fail');
+        logger.info('Migration Fail');
         process.exit(1);
     }
 }

@@ -1,14 +1,15 @@
 import express from 'express';
+import routes from './src/routes';
 
 import { logger } from './src/utils/logger';
 
 const app = express();
 
-const port = 8000;
+app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send({ msg: 'Hello World' });
-});
+app.use('/api', routes);
+
+const port = 8000;
 
 app.listen(port, () => {
     logger.info('------------------------------------------');
