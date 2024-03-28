@@ -1,9 +1,15 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { sign } from 'jsonwebtoken';
 
 import { LoginUserInput } from '../schemas/auth.schema';
 import { getUserByEmail } from '../services/user.services';
 import { passwordCompare } from '../utils/hashing';
+
+interface UserPayload {
+    id: number;
+    email: string;
+}
 
 export const userLoginHandler = async (
     req: Request<{}, {}, LoginUserInput>,
@@ -27,7 +33,15 @@ export const userLoginHandler = async (
         });
     }
 
+    const accessToken = sign(
+        {
+            id: user.id,
+            email: user.email,
+        } as UserPayload,
+        (process.env.JWT_ACCESS_KEY as string) ?? '',
+    );
+
     return res.status(StatusCodes.OK).json({
-        msg: 'login success!',
+        accessToken,
     });
 };
