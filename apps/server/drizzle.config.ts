@@ -1,10 +1,12 @@
 import type { Config } from 'drizzle-kit';
+import 'dotenv/config';
+
 export default {
     schema: './src/db/schema',
     out: './drizzle/migrations',
     driver: 'mysql2',
     dbCredentials: {
-        uri: 'mysql://root:irosha@localhost:3306/job_portal',
+        uri: (process.env.DATABASE_URL as string) ?? '',
     },
     breakpoints: true,
 } satisfies Config;

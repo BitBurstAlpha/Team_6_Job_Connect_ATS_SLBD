@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import sendEmail from '../utils/mail';
 
 import { getUserByEmail, createUser } from '../services/user.services';
 import { RegisterUserInput } from '../schemas/user.schema';
@@ -28,6 +29,12 @@ export const UserRegisterHandler = async (
     });
 
     if (newUser) {
+        await sendEmail({
+            body: 'candidate user register success',
+            email: email,
+            subject: 'congratulation! account created',
+        });
+
         return res.status(StatusCodes.CREATED).json({
             msg: 'user created successful',
         });
