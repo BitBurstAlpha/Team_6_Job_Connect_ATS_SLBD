@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,6 +13,8 @@ import {
 } from '@/components/ui/navigation-menu';
 
 export const Header = () => {
+    const router = useRouter();
+
     return (
         <header className="m-4">
             <div className="flex justify-between">
@@ -50,10 +53,11 @@ export const Header = () => {
                 </div>
 
                 <div className="space-x-4">
-                    <Button>Login</Button>
+                    <Button onClick={() => router.push('/login')}>Login</Button>
                     <Button
                         variant="outline"
                         className="border-blue-300 text-blue-600 hover:text-blue-800"
+                        onClick={() => router.push('/signup')}
                     >
                         Candidate SignUp
                     </Button>
