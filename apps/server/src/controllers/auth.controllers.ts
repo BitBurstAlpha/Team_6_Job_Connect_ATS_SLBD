@@ -39,7 +39,18 @@ export const userLoginHandler = async (
             email: user.email,
         } as UserPayload,
         (process.env.JWT_ACCESS_KEY as string) ?? '',
+        {
+            expiresIn: '7d',
+        },
     );
+
+    res.cookie('accessToken', accessToken, {
+        maxAge: 604800000,
+        path: '/',
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: false,
+    });
 
     return res.status(StatusCodes.OK).json({
         accessToken,
