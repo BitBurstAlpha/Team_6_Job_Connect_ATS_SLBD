@@ -19,6 +19,7 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
+import { useState } from 'react';
 
 const signupSchema = z.object({
     username: z.string().min(1),
@@ -29,6 +30,8 @@ const signupSchema = z.object({
 
 export const SignupForm = () => {
     const router = useRouter();
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     const form = useForm<z.infer<typeof signupSchema>>({
         resolver: zodResolver(signupSchema),
@@ -42,6 +45,8 @@ export const SignupForm = () => {
 
     async function onSubmit(values: z.infer<typeof signupSchema>) {
         try {
+            setLoading(true);
+
             const response = await axios.post(
                 'http://localhost:8000/api/users/register',
                 {
@@ -58,10 +63,12 @@ export const SignupForm = () => {
             }
         } catch (error: unknown) {
             if (error instanceof Error) {
-                toast.error(JSON.stringify(error));
+                toast.error(error.message);
             } else {
                 toast.error('register fail');
             }
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -173,7 +180,7 @@ export const SignupForm = () => {
 
                         <div className="w-full">
                             <Button size="lg" className="w-full">
-                                Signup
+                                {loading ? 'loading...' : 'Signup'}
                             </Button>
                         </div>
                     </form>
