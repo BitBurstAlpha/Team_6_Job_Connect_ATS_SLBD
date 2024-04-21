@@ -44,3 +44,10 @@ export const UserRegisterHandler = async (
         msg: 'something went wrong',
     });
 };
+
+export const GetCurrentUserHandler = async (req: Request, res: Response) => {
+    return res.status(StatusCodes.OK).json({
+        id: req.user.id,
+        email: req.user.email,
+    });
+};
