@@ -3,15 +3,12 @@ import { StatusCodes } from 'http-status-codes';
 import { sign } from 'jsonwebtoken';
 
 import { LoginUserInput } from '../schemas/auth.schema';
-import { getUserByEmail } from '../services/user.services';
+import { getUserByEmail } from '../services/candidate.services';
 import { passwordCompare } from '../utils/hashing';
 
-interface UserPayload {
-    id: number;
-    email: string;
-}
+import { UserPayload } from '../interfaces';
 
-export const userLoginHandler = async (
+export const candidateLoginHandler = async (
     req: Request<{}, {}, LoginUserInput>,
     res: Response,
 ) => {
@@ -37,6 +34,7 @@ export const userLoginHandler = async (
         {
             id: user.id,
             email: user.email,
+            role: user.role,
         } as UserPayload,
         (process.env.JWT_ACCESS_KEY as string) ?? '',
         {

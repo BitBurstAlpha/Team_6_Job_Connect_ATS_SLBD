@@ -4,9 +4,9 @@
         "title": "LSBU Job Portal"
     },
     "paths": {
-        "/api/users/register": {
+        "/api/candidate/register": {
             "post": {
-                "tags": ["Users", "Auth"],
+                "tags": ["Candidate"],
                 "description": "candidate register api",
                 "requestBody": {
                     "content": {
@@ -73,9 +73,9 @@
                 }
             }
         },
-        "/api/auth/login": {
+        "/api/auth/candidate/login": {
             "post": {
-                "tags": ["Auth"],
+                "tags": ["Auth", "Candidate"],
                 "description": "candidate login",
                 "requestBody": {
                     "content": {

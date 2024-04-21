@@ -2,12 +2,12 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import sendEmail from '../utils/mail';
 
-import { getUserByEmail, createUser } from '../services/user.services';
-import { RegisterUserInput } from '../schemas/user.schema';
+import { getUserByEmail, createUser } from '../services/candidate.services';
+import { RegisterCandidateInput } from '../schemas/user.schema';
 import { passwordHash } from '../utils/hashing';
 
-export const UserRegisterHandler = async (
-    req: Request<{}, {}, RegisterUserInput>,
+export const CandidateRegisterHandler = async (
+    req: Request<{}, {}, RegisterCandidateInput>,
     res: Response,
 ) => {
     const { username, email, password } = req.body;

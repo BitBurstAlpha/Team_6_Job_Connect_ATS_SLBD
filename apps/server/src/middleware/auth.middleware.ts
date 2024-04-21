@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
-import { getUserByEmail } from '../services/user.services';
+import { getUserByEmail } from '../services/candidate.services';
 
 interface userPayload {
     id: number;
