@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { sign } from 'jsonwebtoken';
 
 import { LoginUserInput } from '../schemas/auth.schema';
-import { getUserByEmail } from '../services/candidate.services';
+import { getCandidateByEmail } from '../services/candidate.services';
 import { passwordCompare } from '../utils/hashing';
 
 import { UserPayload } from '../interfaces';
@@ -14,7 +14,7 @@ export const candidateLoginHandler = async (
 ) => {
     const { email, password } = req.body;
 
-    const user = await getUserByEmail(email);
+    const user = await getCandidateByEmail(email);
 
     if (!user) {
         return res.status(StatusCodes.UNAUTHORIZED).json({
