@@ -1,13 +1,13 @@
 {
     "openapi": "3.0.3",
     "info": {
-        "title": "LSBU Job Portal"
+        "title": "LSBU Job Connect ATS"
     },
     "paths": {
-        "/api/candidate/register": {
+        "/api/applicant/register": {
             "post": {
-                "tags": ["Candidate"],
-                "description": "candidate register api",
+                "tags": ["Applicant"],
+                "description": "applicant register api",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -22,33 +22,33 @@
                                 "properties": {
                                     "username": {
                                         "type": "string",
-                                        "example": "dilshan"
+                                        "example": "abu"
                                     },
                                     "email": {
                                         "type": "string",
-                                        "example": "dilshan@example.com"
+                                        "example": "abusufians808@gmail.com"
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "dilshan"
+                                        "example": "abusufians"
                                     },
                                     "confirmPassword": {
                                         "type": "string",
-                                        "example": "dilshan"
+                                        "example": "abusufians"
                                     }
                                 }
                             },
                             "example": {
-                                "username": "dilshan",
-                                "email": "dilshan@example.com",
-                                "password": "dilshan",
-                                "confirmPassword": "dilshan"
+                                "username": "abu",
+                                "email": "abusufians808@gmail.com",
+                                "password": "abusufians",
+                                "confirmPassword": "abusufians"
                             }
                         }
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "register new user",
                         "content": {
                             "application/json": {
@@ -73,9 +73,9 @@
                 }
             }
         },
-        "/api/auth/candidate/login": {
+        "/api/auth/create-session": {
             "post": {
-                "tags": ["Auth", "Candidate"],
+                "tags": ["Auth"],
                 "description": "candidate login",
                 "requestBody": {
                     "content": {
@@ -86,7 +86,7 @@
                                 "properties": {
                                     "email": {
                                         "type": "string",
-                                        "example": "dilshan@example.com"
+                                        "example": "dilshansamarakoon2020@gmail.com"
                                     },
                                     "password": {
                                         "type": "string",
@@ -95,7 +95,7 @@
                                 }
                             },
                             "example": {
-                                "email": "dilshan@example.com",
+                                "email": "dilshansamarakoon2020@gmail.com",
                                 "password": "dilshan"
                             }
                         }
@@ -128,6 +128,142 @@
                                         "msg": {
                                             "type": "string",
                                             "example": "invalid credentials"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/client/register": {
+            "post": {
+                "tags": ["Client"],
+                "description": "client register api",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "username",
+                                    "email",
+                                    "password",
+                                    "confirmPassword"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "dilshan"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "dilshansamarakoon2020@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "dilshan"
+                                    },
+                                    "confirmPassword": {
+                                        "type": "string",
+                                        "example": "dilshan"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "username": "dilshan",
+                                "email": "dilshansamarakoon2020@gmail.com",
+                                "password": "dilshan",
+                                "confirmPassword": "dilshan"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "register new client",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "user created successful"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/auth/current-user": {
+            "get": {
+                "tags": ["Auth"],
+                "description": "user session",
+                "responses": {
+                    "200": {
+                        "description": "get current user session",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "user": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "role": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": ["Auth"],
+                "description": "Logout User",
+                "responses": {
+                    "204": {
+                        "description": "logout user successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "logout success"
                                         }
                                     }
                                 }

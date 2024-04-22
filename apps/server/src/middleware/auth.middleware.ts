@@ -1,12 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
-import { getUserByEmail } from '../services/candidate.services';
-
-interface userPayload {
-    id: number;
-    email: string;
-}
+import { getUserByEmail } from '../services/user.services';
+import { UserPayload } from '../interfaces';
 
 export const verifyJwt = async (
     req: Request,
@@ -22,10 +18,10 @@ export const verifyJwt = async (
     }
 
     try {
-        const decodedToken: userPayload = jwt.verify(
+        const decodedToken: UserPayload = jwt.verify(
             token,
             process.env.JWT_ACCESS_KEY as string,
-        ) as userPayload;
+        ) as UserPayload;
 
         const user = await getUserByEmail(decodedToken.email);
 
@@ -36,6 +32,10 @@ export const verifyJwt = async (
         req.user = {
             id: user.id,
             email: user.email,
+        };
+
+        req.identity = {
+            scopes: [user.role],
         };
 
         next();

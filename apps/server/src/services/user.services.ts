@@ -1,12 +1,12 @@
-import { eq, and } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 import { db } from '../db/db';
 import { users } from '../db/schema/users';
 import type { NewUser } from '../db/schema/users';
 
-export const getCandidateByEmail = async (email: string) => {
+export const getUserByEmail = async (email: string) => {
     const result = await db.query.users.findFirst({
-        where: and(eq(users.email, email), eq(users.role, 'candidate')),
+        where: eq(users.email, email),
     });
 
     return result;
