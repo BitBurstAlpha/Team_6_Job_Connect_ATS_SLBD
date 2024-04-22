@@ -12,8 +12,8 @@ export const users = mysqlTable('users', {
     username: varchar('username', { length: 100 }).notNull(),
     email: varchar('email', { length: 100 }).unique().notNull(),
     password: text('password').notNull(),
-    role: mysqlEnum('role', ['client', 'candidate'])
-        .default('candidate')
+    role: mysqlEnum('role', ['client', 'applicant'])
+        .default('applicant')
         .notNull(),
     createdAt: timestamp('crated_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),

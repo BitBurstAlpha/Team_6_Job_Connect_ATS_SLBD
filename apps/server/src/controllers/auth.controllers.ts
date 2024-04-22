@@ -1,15 +1,12 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { sign } from 'jsonwebtoken';
 
+import { signJwt } from '../utils/jwt';
 import { LoginUserInput } from '../schemas/auth.schema';
 import { getUserByEmail } from '../services/user.services';
 import { passwordCompare } from '../utils/hashing';
 
-interface UserPayload {
-    id: number;
-    email: string;
-}
+import { UserPayload } from '../interfaces';
 
 export const userLoginHandler = async (
     req: Request<{}, {}, LoginUserInput>,
@@ -33,12 +30,13 @@ export const userLoginHandler = async (
         });
     }
 
-    const accessToken = sign(
+    const accessToken = signJwt(
         {
             id: user.id,
             email: user.email,
+            role: user.role,
         } as UserPayload,
-        (process.env.JWT_ACCESS_KEY as string) ?? '',
+        'JWT_ACCESS_KEY',
         {
             expiresIn: '7d',
         },
@@ -54,5 +52,25 @@ export const userLoginHandler = async (
 
     return res.status(StatusCodes.OK).json({
         accessToken,
+    });
+};
+
+export const getCurrentUser = (req: Request, res: Response) => {
+    return res.status(StatusCodes.OK).json({
+        ...req.user,
+    });
+};
+
+export const logoutHandler = (req: Request, res: Response) => {
+    res.cookie('accessToken', '', {
+        maxAge: 0,
+        path: '/',
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: false,
+    });
+
+    return res.status(StatusCodes.OK).json({
+        msg: 'logout success',
     });
 };

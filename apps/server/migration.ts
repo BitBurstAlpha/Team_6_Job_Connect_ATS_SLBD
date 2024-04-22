@@ -17,7 +17,14 @@ async function migrateDB() {
         logger.info('Migration Successful');
         process.exit(0);
     } catch (err) {
-        logger.info('Migration Fail');
+        if (err instanceof Error) {
+            logger.info(err.message);
+
+            process.exit(1);
+        }
+
+        logger.info('Migration Fail', err);
+
         process.exit(1);
     }
 }
