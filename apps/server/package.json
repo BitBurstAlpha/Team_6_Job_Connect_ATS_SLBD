@@ -9,6 +9,7 @@
         "lint": "eslint app.ts",
         "db:generate": "drizzle-kit generate:mysql",
         "db:migrate": "ts-node-dev --transpile-only migration.ts",
+        "db:seed": "ts-node-dev --transpile-only seed.ts",
         "db:studio": "drizzle-kit studio"
     },
     "dependencies": {

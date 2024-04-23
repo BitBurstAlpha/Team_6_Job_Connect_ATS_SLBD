@@ -1,19 +1,18 @@
 import express from 'express';
-import {
-    clientAccountCreationHandler,
-    clientRegisterHandler,
-} from '../controllers/client.controllers';
+import validator from '../middleware/validator';
+import { JobPostingSchema } from '../schemas/job.schemas';
 import { verifyJwt } from '../middleware/auth.middleware';
 import { guard } from '../utils/guard';
+import { jobOpeningHandler } from '../controllers/job.controllers';
 
 const router = express.Router();
 
-router.post('/register', clientRegisterHandler);
 router.post(
-    '/account',
+    '/',
+    validator(JobPostingSchema),
     verifyJwt,
     guard.check(['client']),
-    clientAccountCreationHandler,
+    jobOpeningHandler,
 );
 
 export default router;

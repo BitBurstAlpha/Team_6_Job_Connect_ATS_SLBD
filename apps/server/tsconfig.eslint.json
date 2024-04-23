@@ -9,6 +9,7 @@
         "app.ts",
         "drizzle.config.ts",
         "migration.ts",
-        "custom.d.ts"
+        "custom.d.ts",
+        "seed.ts"
     ]
 }

@@ -15,6 +15,34 @@
       "when": 1713758368219,
       "tag": "0001_nasty_wallflower",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1713850232705,
+      "tag": "0002_gorgeous_lucky_pierre",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1713860692280,
+      "tag": "0003_greedy_firestar",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1713883505588,
+      "tag": "0004_chunky_shotgun",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1713885549679,
+      "tag": "0005_glorious_shinobi_shaw",
+      "breakpoints": true
     }
   ]
 }
