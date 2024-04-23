@@ -275,6 +275,170 @@
                     }
                 }
             }
+        },
+        "/api/jobs": {
+            "post": {
+                "tags": ["Jobs"],
+                "description": "Job Opening",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "typeId",
+                                    "categoryId",
+                                    "experienceId",
+                                    "qualificationId",
+                                    "maxSalary",
+                                    "minSalary",
+                                    "location"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Software Engineer"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "We are looking for a skilled software engineer to join our team."
+                                    },
+                                    "typeId": {
+                                        "type": "number",
+                                        "example": 1
+                                    },
+                                    "categoryId": {
+                                        "type": "number",
+                                        "example": 2
+                                    },
+                                    "experienceId": {
+                                        "type": "number",
+                                        "example": 3
+                                    },
+                                    "qualificationId": {
+                                        "type": "number",
+                                        "example": 2
+                                    },
+                                    "maxSalary": {
+                                        "type": "number",
+                                        "example": 80000
+                                    },
+                                    "minSalary": {
+                                        "type": "number",
+                                        "example": 100000
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "New York, NY"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "title": "Software Engineer",
+                                "description": "We are looking for a skilled software engineer to join our team.",
+                                "typeId": 1,
+                                "categoryId": 2,
+                                "experienceId": 3,
+                                "qualificationId": 2,
+                                "maxSalary": 80000,
+                                "minSalary": 100000,
+                                "location": "New York, NY"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Post a Job",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "job opening successful"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/client/account": {
+            "post": {
+                "tags": ["Client"],
+                "description": "Client account creation",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "companyName",
+                                    "fullName",
+                                    "phoneNumber"
+                                ],
+                                "properties": {
+                                    "companyName": {
+                                        "type": "string",
+                                        "example": "techieleaders"
+                                    },
+                                    "fullName": {
+                                        "type": "string",
+                                        "example": "dilshan samarakoon"
+                                    },
+                                    "phoneNumber": {
+                                        "type": "string",
+                                        "example": "+94765175190"
+                                    },
+                                    "website": {
+                                        "type": "string",
+                                        "example": "techieleaders.com"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "companyName": "techieleaders",
+                                "fullName": "dilshan samarakoon",
+                                "phoneNumber": "+94765175190",
+                                "website": "techieleaders.com"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "client account creation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "client account creation successful"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
         }
     }
 }

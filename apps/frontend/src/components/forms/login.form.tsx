@@ -39,7 +39,7 @@ export const LoginForm = () => {
     async function onSubmit(values: z.infer<typeof loginSchema>) {
         try {
             const response = await axios.post(
-                'http://localhost:8000/api/auth/login',
+                'http://localhost:8000/api/auth/create-session',
                 {
                     email: values.email,
                     password: values.password,

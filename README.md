@@ -22,16 +22,22 @@ Follow these steps!
 7. Run database migrations
 
     ```bash
-       pnpm --filter server db:migrate
+       pnpm db:migrate
     ```
 
-8. start the development server
+8. Run database seed
+
+    ```bash
+       pnpm db:seed
+    ```
+
+9. start the development server
 
     ```bash
         pnpm dev
     ```
 
-9. start the drizzle studio
+10. start the drizzle studio
 
     ```bash
         pnpm db:studio
