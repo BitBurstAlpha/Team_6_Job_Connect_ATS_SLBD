@@ -1,0 +1,1 @@
+ALTER TABLE `jobs` ADD `slug` text NOT NULL;

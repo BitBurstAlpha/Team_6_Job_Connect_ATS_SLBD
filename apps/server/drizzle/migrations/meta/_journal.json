@@ -43,6 +43,20 @@
       "when": 1713885549679,
       "tag": "0005_glorious_shinobi_shaw",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1713893546981,
+      "tag": "0006_stale_devos",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1713893660183,
+      "tag": "0007_peaceful_mac_gargan",
+      "breakpoints": true
     }
   ]
 }
