@@ -276,7 +276,7 @@
                 }
             }
         },
-        "/api/jobs": {
+        "/api/jobs/": {
             "post": {
                 "tags": ["Jobs"],
                 "description": "Job Opening",
@@ -433,6 +433,157 @@
                     },
                     "409": {
                         "description": "Conflict"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/jobs": {
+            "get": {
+                "tags": ["Jobs"],
+                "description": "Get All Jobs",
+                "responses": {
+                    "200": {
+                        "description": "Get All Jobs"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/jobs/{slug}": {
+            "get": {
+                "tags": ["Jobs"],
+                "description": "Get Job By Slug",
+                "responses": {
+                    "200": {
+                        "description": "job deleted"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Query parameter",
+                        "required": true,
+                        "schema": {
+                            "example": "e7f7u9XuMNNrasUh451k0",
+                            "type": "string"
+                        }
+                    }
+                ]
+            },
+            "patch": {
+                "tags": ["Jobs"],
+                "description": "update job details",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Software Engineer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "title": "Computer Science"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Job updated"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Query parameter",
+                        "required": true,
+                        "schema": {
+                            "example": "e7f7u9XuMNNrasUh451k0",
+                            "type": "string"
+                        }
+                    }
+                ]
+            },
+            "delete": {
+                "tags": ["Jobs"],
+                "description": "Delete Job",
+                "responses": {
+                    "200": {
+                        "description": "Job deleted"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Query parameter",
+                        "required": true,
+                        "schema": {
+                            "example": "e7f7u9XuMNNrasUh451k0",
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/users/avatar": {
+            "patch": {
+                "tags": ["Users", "Auth"],
+                "description": "update user avatar",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "avatar": {
+                                        "description": "file",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Avatar Updated"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     },
                     "400": {
                         "description": "Bad Request"

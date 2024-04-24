@@ -12,6 +12,7 @@ export const jobs = mysqlTable('jobs', {
     id: int('id').autoincrement().primaryKey(),
     title: varchar('title', { length: 100 }).notNull(),
     description: text('description').notNull(),
+    slug: varchar('slug', { length: 255 }).unique().notNull(),
     typeId: int('typeId')
         .references(() => type.id)
         .notNull(),

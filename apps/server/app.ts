@@ -11,6 +11,7 @@ import routes from './src/routes';
 import { logger } from './src/utils/logger';
 import { ValidateEnv } from './src/utils/validateEnv';
 import { StatusCodes } from 'http-status-codes';
+import path from 'path';
 
 ValidateEnv();
 
@@ -26,7 +27,13 @@ app.use(
 );
 app.use(cookieParser());
 
+// Serve static files
+app.use('/uploads', express.static(path.join(__dirname, 'public/images')));
+
+// Api Endpoints
 app.use('/api', routes);
+
+// Documentation
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(

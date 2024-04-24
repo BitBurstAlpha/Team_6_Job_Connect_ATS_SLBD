@@ -13,6 +13,12 @@ export const getUserByEmail = async (email: string) => {
 };
 
 export const createUser = async (user: NewUser) => {
-    const newUser = await db.insert(users).values(user);
-    return newUser;
+    await db.insert(users).values(user);
+};
+
+export const updateUserById = async (
+    updateData: Partial<NewUser>,
+    userId: number,
+) => {
+    await db.update(users).set(updateData).where(eq(users.id, userId));
 };

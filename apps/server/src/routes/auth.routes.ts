@@ -12,6 +12,7 @@ import { guard } from '../utils/guard';
 const router = express.Router();
 
 router.post('/create-session', validator(LoginUserSchema), userLoginHandler);
+
 router.get(
     '/current-user',
     verifyJwt,
