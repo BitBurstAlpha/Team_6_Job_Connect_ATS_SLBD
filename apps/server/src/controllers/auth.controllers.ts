@@ -5,6 +5,7 @@ import { signJwt } from '../utils/jwt';
 import { LoginUserInput } from '../schemas/auth.schema';
 import { getUserByEmail } from '../services/user.services';
 import { passwordCompare } from '../utils/hashing';
+import { config } from '../config';
 
 import { UserPayload } from '../interfaces';
 
@@ -55,10 +56,33 @@ export const userLoginHandler = async (
     });
 };
 
-export const getCurrentUser = (req: Request, res: Response) => {
-    return res.status(StatusCodes.OK).json({
-        ...req.user,
-    });
+export const getCurrentUser = async (req: Request, res: Response) => {
+    try {
+        const user = await getUserByEmail(req.user.email);
+
+        if (!user) {
+            return res.status(StatusCodes.UNAUTHORIZED).json({
+                err: 'unauthorized',
+            });
+        }
+
+        return res.status(StatusCodes.OK).json({
+            id: user.id,
+            username: user.username,
+            role: user.role,
+            avatar: `${config.ORIGIN}${user.avatar}`,
+        });
+    } catch (err) {
+        if (err instanceof Error) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                err: err.message,
+            });
+        }
+
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            err: 'something went wrong',
+        });
+    }
 };
 
 export const logoutHandler = (req: Request, res: Response) => {

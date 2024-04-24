@@ -4,6 +4,7 @@ export const ValidateEnv = () => {
     cleanEnv(process.env, {
         PORT: port(),
         DATABASE_URL: str(),
+        ORIGIN: str(),
 
         JWT_ACCESS_KEY: str(),
 

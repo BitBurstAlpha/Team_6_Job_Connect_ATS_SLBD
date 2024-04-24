@@ -24,18 +24,12 @@ export const CandidateRegisterHandler = async (
 
         const hashedPassword = await passwordHash(password);
 
-        const newUser = await createUser({
+        await createUser({
             username,
             email,
             password: hashedPassword,
             role: 'applicant',
         });
-
-        if (!newUser) {
-            return res.status(StatusCodes.BAD_REQUEST).json({
-                error: 'applicant register fail',
-            });
-        }
 
         await sendEmail({
             body: 'applicant register success',

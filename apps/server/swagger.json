@@ -590,6 +590,47 @@
                     }
                 }
             }
+        },
+        "/api/users/change-password": {
+            "post": {
+                "tags": ["Users", "Auth"],
+                "description": "change user password",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["oldPassword", "newPassword"],
+                                "properties": {
+                                    "oldPassword": {
+                                        "type": "string",
+                                        "example": "abusufians"
+                                    },
+                                    "newPassword": {
+                                        "type": "string",
+                                        "example": "abusufians#"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "oldPassword": "abusufians",
+                                "newPassword": "abusufians#"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "password change success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
         }
     }
 }
