@@ -4,6 +4,7 @@ import 'dotenv/config';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import { config } from './src/config';
 
 import swaggerDocument from './swagger.json';
 
@@ -19,9 +20,14 @@ const app = express();
 
 app.use(express.json());
 
+const corsOrigin: string[] | undefined = config.CORS_ORIGIN?.split(',');
+
 app.use(
     cors({
-        origin: 'http://localhost:3000',
+        origin: corsOrigin ?? [
+            'http://localhost:3000',
+            'http://localhost:3001',
+        ],
         credentials: true,
     }),
 );

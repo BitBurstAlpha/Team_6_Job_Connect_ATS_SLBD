@@ -91,6 +91,10 @@
                                     "password": {
                                         "type": "string",
                                         "example": "dilshan"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "nullable": true
                                     }
                                 }
                             },

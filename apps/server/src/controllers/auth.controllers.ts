@@ -3,9 +3,13 @@ import { StatusCodes } from 'http-status-codes';
 
 import { signJwt } from '../utils/jwt';
 import { LoginUserInput } from '../schemas/auth.schema';
-import { getUserByEmail } from '../services/user.services';
+import {
+    getUserByEmail,
+    getUserByEmailWithRole,
+} from '../services/user.services';
 import { passwordCompare } from '../utils/hashing';
 import { config } from '../config';
+import type { User } from '../db/schema/users';
 
 import { UserPayload } from '../interfaces';
 
@@ -13,9 +17,15 @@ export const userLoginHandler = async (
     req: Request<{}, {}, LoginUserInput>,
     res: Response,
 ) => {
-    const { email, password } = req.body;
+    const { email, password, type } = req.body;
 
-    const user = await getUserByEmail(email);
+    let user: User | undefined;
+
+    if (type === 'client' || type === 'applicant') {
+        user = await getUserByEmailWithRole(email, type);
+    } else {
+        user = await getUserByEmail(email);
+    }
 
     if (!user) {
         return res.status(StatusCodes.UNAUTHORIZED).json({
@@ -52,7 +62,10 @@ export const userLoginHandler = async (
     });
 
     return res.status(StatusCodes.OK).json({
-        accessToken,
+        id: user.id,
+        username: user.username,
+        role: user.role,
+        avatar: `${config.ORIGIN}${user.avatar}`,
     });
 };
 
