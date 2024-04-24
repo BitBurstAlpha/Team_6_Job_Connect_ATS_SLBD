@@ -557,6 +557,39 @@
                     }
                 ]
             }
+        },
+        "/api/users/avatar": {
+            "patch": {
+                "tags": ["Users", "Auth"],
+                "description": "update user avatar",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "avatar": {
+                                        "description": "file",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Avatar Updated"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
         }
     }
 }

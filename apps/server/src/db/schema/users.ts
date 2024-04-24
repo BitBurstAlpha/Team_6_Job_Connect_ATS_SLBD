@@ -12,6 +12,7 @@ import { jobs } from './jobs';
 export const users = mysqlTable('users', {
     id: int('id').autoincrement().primaryKey(),
     username: varchar('username', { length: 100 }).notNull(),
+    avatar: text('avatar').default('/uploads/avatar.png').notNull(),
     email: varchar('email', { length: 100 }).unique().notNull(),
     password: text('password').notNull(),
     role: mysqlEnum('role', ['client', 'applicant'])

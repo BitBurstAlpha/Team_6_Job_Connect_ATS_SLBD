@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `avatar` text DEFAULT ('https://fakeimg.pl/200x200') NOT NULL;
