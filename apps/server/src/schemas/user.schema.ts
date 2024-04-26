@@ -21,3 +21,16 @@ export const RegisterUserSchema = object({
 });
 
 export type RegisterUserInput = TypeOf<typeof RegisterUserSchema>['body'];
+
+export const PasswordChangeSchema = object({
+    body: object({
+        oldPassword: string({
+            required_error: 'old password is required',
+        }).min(6),
+        newPassword: string({
+            required_error: 'new password is required',
+        }).min(6),
+    }),
+});
+
+export type PasswordChangeInput = TypeOf<typeof PasswordChangeSchema>['body'];

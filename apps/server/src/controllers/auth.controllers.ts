@@ -3,18 +3,30 @@ import { StatusCodes } from 'http-status-codes';
 
 import { signJwt } from '../utils/jwt';
 import { LoginUserInput } from '../schemas/auth.schema';
-import { getUserByEmail } from '../services/user.services';
+import {
+    getUserByEmail,
+    getUserByEmailWithRole,
+} from '../services/user.services';
 import { passwordCompare } from '../utils/hashing';
+import { config } from '../config';
+import type { User } from '../db/schema/users';
 
 import { UserPayload } from '../interfaces';
+import { getClientById } from '../services/client.services';
 
 export const userLoginHandler = async (
     req: Request<{}, {}, LoginUserInput>,
     res: Response,
 ) => {
-    const { email, password } = req.body;
+    const { email, password, type } = req.body;
 
-    const user = await getUserByEmail(email);
+    let user: User | undefined;
+
+    if (type === 'client' || type === 'applicant') {
+        user = await getUserByEmailWithRole(email, type);
+    } else {
+        user = await getUserByEmail(email);
+    }
 
     if (!user) {
         return res.status(StatusCodes.UNAUTHORIZED).json({
@@ -46,19 +58,48 @@ export const userLoginHandler = async (
         maxAge: 604800000,
         path: '/',
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: 'strict',
         secure: false,
     });
 
     return res.status(StatusCodes.OK).json({
-        accessToken,
+        id: user.id,
+        username: user.username,
+        role: user.role,
+        avatar: `${config.ORIGIN}${user.avatar}`,
     });
 };
 
-export const getCurrentUser = (req: Request, res: Response) => {
-    return res.status(StatusCodes.OK).json({
-        ...req.user,
-    });
+export const getCurrentUser = async (req: Request, res: Response) => {
+    try {
+        const user = await getUserByEmail(req.user.email);
+
+        if (!user) {
+            return res.status(StatusCodes.UNAUTHORIZED).json({
+                err: 'unauthorized',
+            });
+        }
+
+        const client = await getClientById(user.id);
+
+        return res.status(StatusCodes.OK).json({
+            id: user.id,
+            username: user.username,
+            role: user.role,
+            avatar: `${config.ORIGIN}${user.avatar}`,
+            isAccount: !!client,
+        });
+    } catch (err) {
+        if (err instanceof Error) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                err: err.message,
+            });
+        }
+
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            err: 'something went wrong',
+        });
+    }
 };
 
 export const logoutHandler = (req: Request, res: Response) => {
@@ -66,7 +107,7 @@ export const logoutHandler = (req: Request, res: Response) => {
         maxAge: 0,
         path: '/',
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: 'strict',
         secure: false,
     });
 

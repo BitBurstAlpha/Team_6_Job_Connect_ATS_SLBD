@@ -29,18 +29,12 @@ export const clientRegisterHandler = async (
 
         const hashedPassword = await passwordHash(password);
 
-        const newUser = await createUser({
+        await createUser({
             username,
             email,
             password: hashedPassword,
             role: 'client',
         });
-
-        if (!newUser) {
-            return res.status(StatusCodes.BAD_REQUEST).json({
-                error: 'client register fail',
-            });
-        }
 
         await sendEmail({
             body: 'client register success',

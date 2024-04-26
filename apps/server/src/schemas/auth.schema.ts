@@ -8,6 +8,7 @@ export const LoginUserSchema = object({
         password: string({
             required_error: 'password is required',
         }).min(6),
+        type: string().optional(),
     }),
 });
 
