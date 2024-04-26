@@ -1,8 +1,9 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { useUserStore } from '@/store/userStore';
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -15,6 +16,12 @@ import {
 export const Header = () => {
     const router = useRouter();
 
+    const { session, isSessionLoading } = useUserStore();
+
+    if (isSessionLoading) {
+        return <h1>loading</h1>;
+    }
+
     return (
         <header className="m-4">
             <div className="flex justify-between">
@@ -22,46 +29,55 @@ export const Header = () => {
                     <Image
                         src="/logo.png"
                         alt="LSBU Logo"
+                        className="w-auto"
                         width={100}
                         height={300}
                         priority
                     />
                 </div>
 
-                <div>
-                    <NavigationMenu>
-                        <NavigationMenuList>
-                            <NavigationMenuItem>
-                                <NavigationMenuTrigger>
-                                    Job
-                                </NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <NavigationMenuLink></NavigationMenuLink>
-                                </NavigationMenuContent>
-                            </NavigationMenuItem>
+                {session ? null : (
+                    <div>
+                        <NavigationMenu>
+                            <NavigationMenuList>
+                                <NavigationMenuItem>
+                                    <NavigationMenuTrigger>
+                                        Job
+                                    </NavigationMenuTrigger>
+                                    <NavigationMenuContent>
+                                        <NavigationMenuLink></NavigationMenuLink>
+                                    </NavigationMenuContent>
+                                </NavigationMenuItem>
 
-                            <NavigationMenuItem>
-                                <NavigationMenuTrigger>
-                                    For employers
-                                </NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <NavigationMenuLink></NavigationMenuLink>
-                                </NavigationMenuContent>
-                            </NavigationMenuItem>
-                        </NavigationMenuList>
-                    </NavigationMenu>
-                </div>
+                                <NavigationMenuItem>
+                                    <NavigationMenuTrigger>
+                                        For employers
+                                    </NavigationMenuTrigger>
+                                    <NavigationMenuContent>
+                                        <NavigationMenuLink></NavigationMenuLink>
+                                    </NavigationMenuContent>
+                                </NavigationMenuItem>
+                            </NavigationMenuList>
+                        </NavigationMenu>
+                    </div>
+                )}
 
-                <div className="space-x-4">
-                    <Button onClick={() => router.push('/login')}>Login</Button>
-                    <Button
-                        variant="outline"
-                        className="border-blue-300 text-blue-600 hover:text-blue-800"
-                        onClick={() => router.push('/signup')}
-                    >
-                        Candidate SignUp
-                    </Button>
-                </div>
+                {session?.id ? (
+                    <p>{session.username}</p>
+                ) : (
+                    <div className="space-x-4">
+                        <Button onClick={() => router.push('/login')}>
+                            Login
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="border-blue-300 text-blue-600 hover:text-blue-800"
+                            onClick={() => router.push('/signup')}
+                        >
+                            Candidate SignUp
+                        </Button>
+                    </div>
+                )}
             </div>
         </header>
     );

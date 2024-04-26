@@ -4,6 +4,7 @@ import 'dotenv/config';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
 import { config } from './src/config';
 
 import swaggerDocument from './swagger.json';
@@ -32,6 +33,7 @@ app.use(
     }),
 );
 app.use(cookieParser());
+app.use(morgan('tiny'));
 
 // Serve static files
 app.use('/uploads', express.static(path.join(__dirname, 'public/images')));

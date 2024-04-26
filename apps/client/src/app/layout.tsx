@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 import './globals.css';
 import Providers from './providers';
+import { getServerSession } from '@/lib/session';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -11,16 +12,20 @@ export const metadata: Metadata = {
     description: 'ATS Client WebApp',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const session = await getServerSession();
+
     return (
         <html lang="en">
-            <Providers>
-                <body className={inter.className}>{children}</body>
-                <Toaster richColors />
+            <Providers session={session}>
+                <body className={inter.className}>
+                    {children}
+                    <Toaster />
+                </body>
             </Providers>
         </html>
     );

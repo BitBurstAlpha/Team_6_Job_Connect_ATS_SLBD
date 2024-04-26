@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form';
 import Lottie from 'lottie-react';
 import loading from '@lottie/loading.json';
 import { toast } from 'sonner';
+import type { User } from '@/types';
 
 import {
     Form,
@@ -53,14 +54,7 @@ export const LoginForm = () => {
                 },
             );
         },
-        onSuccess: (data: {
-            data: {
-                id: number;
-                username: string;
-                role: string;
-                avatar: string;
-            };
-        }) => {
+        onSuccess: (data: { data: User }) => {
             toast.success(
                 `Hello! ${data.data.username}. 🎉 You're in! Welcome back to your account. 🎉`,
             );
