@@ -1,1 +1,3 @@
-export const baseUrl = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api`;
+export const base = process.env.NEXT_PUBLIC_API_ENDPOINT;
+
+export const baseUrl = `${base}/api`;

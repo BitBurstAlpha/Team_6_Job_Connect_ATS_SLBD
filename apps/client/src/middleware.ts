@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from '@/lib/session';
 
 const publicRoutes = ['/login', '/signup', '/'];
-const protectedRoutes = ['/dashboard'];
+const protectedRoutes = ['/dashboard', '/account-create'];
 
 export default async function middleware(req: NextRequest) {
     const session = await getServerSession();
@@ -13,6 +13,22 @@ export default async function middleware(req: NextRequest) {
 
     if (isProtectedRoute && !session?.id) {
         return NextResponse.redirect(new URL('/login', req.nextUrl));
+    }
+
+    if (
+        isProtectedRoute &&
+        session?.id &&
+        !session.isAccount &&
+        req.nextUrl.pathname !== '/account-create'
+    ) {
+        return NextResponse.redirect(new URL('/account-create', req.nextUrl));
+    }
+
+    if (
+        session?.isAccount &&
+        req.nextUrl.pathname.startsWith('/account-create')
+    ) {
+        return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
     }
 
     if (

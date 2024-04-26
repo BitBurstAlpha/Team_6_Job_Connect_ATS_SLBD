@@ -3,4 +3,5 @@ export interface User {
     username: string;
     role: string;
     avatar: string;
+    isAccount: boolean;
 }

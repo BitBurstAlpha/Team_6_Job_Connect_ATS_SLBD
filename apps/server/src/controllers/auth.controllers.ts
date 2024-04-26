@@ -12,6 +12,7 @@ import { config } from '../config';
 import type { User } from '../db/schema/users';
 
 import { UserPayload } from '../interfaces';
+import { getClientById } from '../services/client.services';
 
 export const userLoginHandler = async (
     req: Request<{}, {}, LoginUserInput>,
@@ -57,7 +58,7 @@ export const userLoginHandler = async (
         maxAge: 604800000,
         path: '/',
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: 'strict',
         secure: false,
     });
 
@@ -79,11 +80,14 @@ export const getCurrentUser = async (req: Request, res: Response) => {
             });
         }
 
+        const client = await getClientById(user.id);
+
         return res.status(StatusCodes.OK).json({
             id: user.id,
             username: user.username,
             role: user.role,
             avatar: `${config.ORIGIN}${user.avatar}`,
+            isAccount: !!client,
         });
     } catch (err) {
         if (err instanceof Error) {
@@ -103,7 +107,7 @@ export const logoutHandler = (req: Request, res: Response) => {
         maxAge: 0,
         path: '/',
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: 'strict',
         secure: false,
     });
 
