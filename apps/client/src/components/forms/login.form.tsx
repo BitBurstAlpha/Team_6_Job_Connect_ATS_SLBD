@@ -110,6 +110,7 @@ export const LoginForm = () => {
                                         <FormControl>
                                             <Input
                                                 placeholder="password"
+                                                type="password"
                                                 {...field}
                                             />
                                         </FormControl>

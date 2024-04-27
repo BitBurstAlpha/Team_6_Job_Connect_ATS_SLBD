@@ -62,9 +62,7 @@ export const getAllJobHandler = async (req: Request, res: Response) => {
         const jobs = await getAllJobs();
 
         if (jobs.length === 0) {
-            return res.status(StatusCodes.NOT_FOUND).json({
-                msg: 'Not Any Jobs',
-            });
+            return res.status(StatusCodes.OK).json([]);
         }
 
         return res.status(StatusCodes.OK).json(jobs);

@@ -24,7 +24,7 @@ export default async function RootLayout({
             <Providers session={session}>
                 <body className={inter.className}>
                     {children}
-                    <Toaster />
+                    <Toaster richColors />
                 </body>
             </Providers>
         </html>
