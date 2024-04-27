@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from '@/lib/session';
 
 const publicRoutes = ['/login', '/signup', '/'];
-const protectedRoutes = ['/dashboard', '/account-create'];
+const protectedRoutes = ['/dashboard', '/account-create', '/dashboard/jobs'];
 
 export default async function middleware(req: NextRequest) {
     const session = await getServerSession();
