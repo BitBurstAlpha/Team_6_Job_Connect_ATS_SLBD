@@ -33,7 +33,10 @@ export const jobOpeningHandler = async (
             });
         }
 
-        const slug = nanoid();
+        const prefix = 'slbd';
+        const shortId = nanoid();
+
+        const slug = prefix + shortId;
 
         await openingJob({
             userId: req.user?.id,
