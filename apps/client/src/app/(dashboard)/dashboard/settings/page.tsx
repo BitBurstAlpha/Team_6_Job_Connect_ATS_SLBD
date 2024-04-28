@@ -1,3 +1,9 @@
+import { ChangePasswordForm } from '@/components/forms/changePassword';
+
 export default function Settings() {
-    return <h1></h1>;
+    return (
+        <div>
+            <ChangePasswordForm />
+        </div>
+    );
 }

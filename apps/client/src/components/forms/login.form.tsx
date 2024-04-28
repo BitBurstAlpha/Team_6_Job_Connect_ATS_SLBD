@@ -58,6 +58,7 @@ export const LoginForm = () => {
             toast.success(
                 `Hello! ${data.data.username}. 🎉 You're in! Welcome back to your account. 🎉`,
             );
+            router.refresh();
             router.push('/account-create');
         },
         onError: (err) => {
