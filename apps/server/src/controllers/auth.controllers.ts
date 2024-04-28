@@ -59,7 +59,7 @@ export const userLoginHandler = async (
         path: '/',
         httpOnly: true,
         sameSite: 'strict',
-        secure: false,
+        secure: config.NODE_ENV === 'production',
     });
 
     return res.status(StatusCodes.OK).json({
@@ -108,7 +108,7 @@ export const logoutHandler = (req: Request, res: Response) => {
         path: '/',
         httpOnly: true,
         sameSite: 'strict',
-        secure: false,
+        secure: config.NODE_ENV === 'production',
     });
 
     return res.status(StatusCodes.OK).json({

@@ -5,6 +5,7 @@ export const ValidateEnv = () => {
         PORT: port(),
         DATABASE_URL: str(),
         ORIGIN: str(),
+        NODE_ENV: str(),
 
         JWT_ACCESS_KEY: str(),
 

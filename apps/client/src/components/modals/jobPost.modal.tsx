@@ -43,9 +43,6 @@ import { JobPostRequestBodyType } from '@/types';
 import { usePublicJobs } from '@/lib/api';
 
 const defaultDescription = `
-        <h1>Full Stack Software Engineer</h1> 
-        <p></p>
-        <h2>Description</h2>
         <p>A Full Stack Software Engineer is a versatile professional who possesses both frontend and backend development skills. They are proficient in creating user-facing interfaces as well as managing server-side logic and databases.</p>
         <p></p>
         <h2>Skills</h2>
@@ -145,8 +142,8 @@ export function JobPostModal({
         },
         onSuccess: () => {
             toast.success('🎉 Job Updated successful! 🎉');
-            setOpen(false);
             refetch();
+            setOpen(false);
         },
         onError: () => {
             toast.error('Please double-check your details and try again');
@@ -456,8 +453,15 @@ export function JobPostModal({
                         </div>
 
                         <DialogFooter className="p-4">
-                            <Button disabled={mutation.isPending} type="submit">
-                                {mutation.isPending ? (
+                            <Button
+                                disabled={
+                                    mutation.isPending ||
+                                    updateMutation.isPending
+                                }
+                                type="submit"
+                            >
+                                {mutation.isPending ||
+                                updateMutation.isPending ? (
                                     <Lottie
                                         animationData={loading}
                                         loop

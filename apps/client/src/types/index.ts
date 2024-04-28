@@ -66,6 +66,18 @@ export type JobResponse = {
     userId: number;
     createdAt: string;
     updatedAt: string;
+    category: {
+        name: string;
+    };
+    experience: {
+        name: string;
+    };
+    qualification: {
+        name: string;
+    };
+    type: {
+        name: string;
+    };
 };
 
 export type IJobPostData = {

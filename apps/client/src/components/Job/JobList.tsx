@@ -38,7 +38,6 @@ import { IJobPostData } from '@/types';
 import { api, usePublicJobs } from '@/lib/api';
 import Lottie from 'lottie-react';
 import loading from '@lottie/loading.json';
-import axios from 'axios';
 import { job } from '@api/job.apis';
 
 export function JobListView({
@@ -121,11 +120,11 @@ export function JobListView({
                         <TableCell>
                             <Badge variant="outline">{job.title}</Badge>
                         </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                            {job.typeId}
+                        <TableCell className="hidden md:table-cell capitalize">
+                            {job.type.name}
                         </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                            {job.categoryId}
+                        <TableCell className="hidden md:table-cell capitalize">
+                            {job.category.name}
                         </TableCell>
                         <TableCell className="hidden md:table-cell">
                             {job.createdAt}
