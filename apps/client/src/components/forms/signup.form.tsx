@@ -62,8 +62,8 @@ export const SignupForm = () => {
 
     return (
         <Form {...form}>
-            <div className="w-1/2">
-                <div className="bg-white max-w-lg py-16 px-20 mx-auto rounded-xl shadow space-y-4">
+            <div>
+                <div className="bg-white w-full py-16 px-20 mx-auto rounded-xl shadow space-y-4">
                     <div className="w-full">
                         <h2 className="text-3xl font-medium text-center">
                             Sign Up

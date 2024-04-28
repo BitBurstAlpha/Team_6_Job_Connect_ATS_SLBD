@@ -46,5 +46,7 @@ export const useSessionQuery = () => {
             });
         },
         refetchOnWindowFocus: true,
+        retry: 1,
+        retryDelay: 10000,
     });
 };
