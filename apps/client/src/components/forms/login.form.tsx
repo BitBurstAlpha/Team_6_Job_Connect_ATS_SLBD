@@ -24,6 +24,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { useMutation } from '@tanstack/react-query';
+import { useSession } from '@/context/useSession';
 
 const loginSchema = z.object({
     email: z.string().email(),
@@ -32,6 +33,7 @@ const loginSchema = z.object({
 
 export const LoginForm = () => {
     const router = useRouter();
+    const { refetch } = useSession();
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -58,7 +60,7 @@ export const LoginForm = () => {
             toast.success(
                 `Hello! ${data.data.username}. 🎉 You're in! Welcome back to your account. 🎉`,
             );
-            router.refresh();
+            refetch();
             router.push('/account-create');
         },
         onError: (err) => {

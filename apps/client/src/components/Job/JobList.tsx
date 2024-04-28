@@ -35,7 +35,7 @@ import { Badge } from '@/components/ui/badge';
 
 import { JobPostModal } from '../modals/jobPost.modal';
 import { IJobPostData } from '@/types';
-import { usePublicJobs } from '@/lib/api';
+import { api, usePublicJobs } from '@/lib/api';
 import Lottie from 'lottie-react';
 import loading from '@lottie/loading.json';
 import axios from 'axios';
@@ -50,9 +50,7 @@ export function JobListView({
     const { data, isLoading, isError, refetch } = usePublicJobs();
 
     const jobDeleteHandler = async (slug: string) => {
-        await axios.delete(`${job.jobApi}/${slug}`, {
-            withCredentials: true,
-        });
+        await api.delete(`${job.jobApi}/${slug}`);
 
         refetch();
     };
