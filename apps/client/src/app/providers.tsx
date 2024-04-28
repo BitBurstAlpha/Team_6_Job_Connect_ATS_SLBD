@@ -1,8 +1,8 @@
 'use client';
 
+import { SessionContextProvider } from '@/context/useSession';
 import { User } from '@/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { SessionProvider } from '@/providers/SessionProvider';
 
 export default function Providers({
     children,
@@ -15,7 +15,9 @@ export default function Providers({
 
     return (
         <QueryClientProvider client={queryClient}>
-            <SessionProvider session={session}>{children}</SessionProvider>
+            <SessionContextProvider session={session}>
+                {children}
+            </SessionContextProvider>
         </QueryClientProvider>
     );
 }

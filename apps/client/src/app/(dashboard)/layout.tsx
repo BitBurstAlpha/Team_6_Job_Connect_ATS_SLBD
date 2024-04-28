@@ -39,10 +39,7 @@ export default async function DashboardLayout({
                     </div>
 
                     <div className="flex-1">
-                        <SidebarMiniProfile
-                            avatar={session.avatar}
-                            username={session.username}
-                        />
+                        <SidebarMiniProfile />
 
                         <DashboardNav items={dashboardConfig.sidebarNav} />
                     </div>
@@ -66,7 +63,7 @@ export default async function DashboardLayout({
                         </form>
                     </div>
 
-                    <DashboardProfile session={session} />
+                    <DashboardProfile />
                 </header>
 
                 <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">

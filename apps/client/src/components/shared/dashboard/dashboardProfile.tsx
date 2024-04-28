@@ -1,6 +1,5 @@
 'use client';
 
-import { User } from '@/types';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Icons } from '@/components/icons';
 import { LogOut } from 'lucide-react';
@@ -15,9 +14,13 @@ import {
 } from '@/components/ui/dropdown-menu';
 import axios from 'axios';
 import { client } from '@api/client.apis';
+import { useSession } from '@/context/useSession';
+import { toast } from 'sonner';
 
-export const DashboardProfile = ({ session }: { session: User | null }) => {
+export const DashboardProfile = () => {
     const router = useRouter();
+
+    const { user, isSessionLoading } = useSession();
 
     const logoutHandler = async () => {
         try {
@@ -28,15 +31,15 @@ export const DashboardProfile = ({ session }: { session: User | null }) => {
                     withCredentials: true,
                 },
             );
-
-            router.push('/login');
         } catch (err) {
-            router.push('/login');
+            toast.error('something went wrong');
+        } finally {
+            router.refresh();
         }
     };
 
-    if (!session) {
-        return null;
+    if (!user && !isSessionLoading) {
+        router.push('/login');
     }
 
     return (
@@ -45,15 +48,15 @@ export const DashboardProfile = ({ session }: { session: User | null }) => {
                 <button className="flex items-center space-x-2 border p-1 border-neutral-400 rounded-full">
                     <Avatar>
                         <AvatarImage
-                            src={session.avatar}
+                            src={user?.avatar}
                             className="object-cover"
                         />
                         <AvatarFallback>
-                            {session.username.substring(0, 2)}
+                            {user?.username.substring(0, 2)}
                         </AvatarFallback>
                     </Avatar>
 
-                    <p className="capitalize">{session.username}</p>
+                    <p className="capitalize">{user?.username}</p>
 
                     <Icons.chevronDown className="h-6 x-6 text-primary" />
                 </button>

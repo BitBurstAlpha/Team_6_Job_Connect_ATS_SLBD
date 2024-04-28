@@ -24,6 +24,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { useMutation } from '@tanstack/react-query';
+import { useSession } from '@/context/useSession';
 
 const loginSchema = z.object({
     email: z.string().email(),
@@ -32,6 +33,7 @@ const loginSchema = z.object({
 
 export const LoginForm = () => {
     const router = useRouter();
+    const { refetch } = useSession();
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -58,7 +60,7 @@ export const LoginForm = () => {
             toast.success(
                 `Hello! ${data.data.username}. 🎉 You're in! Welcome back to your account. 🎉`,
             );
-            router.refresh();
+            refetch();
             router.push('/account-create');
         },
         onError: (err) => {
@@ -72,8 +74,8 @@ export const LoginForm = () => {
 
     return (
         <Form {...form}>
-            <div className="w-1/2">
-                <div className="bg-white max-w-lg py-16 px-20 mx-auto rounded-xl shadow space-y-4">
+            <div>
+                <div className="bg-white py-16 px-20 mx-auto rounded-xl shadow space-y-4">
                     <div className="w-full">
                         <h2 className="text-3xl font-medium text-center">
                             Hello Again!
@@ -161,7 +163,9 @@ export const LoginForm = () => {
 
                     <div className="flex w-full">
                         <div className="mx-auto flex space-x-2">
-                            <p className="">New Job Seeker?</p>
+                            <p className="">
+                                don&apos;t have an client account?
+                            </p>
                             <Link href="/signup" className="text-blue-600">
                                 Signup
                             </Link>
