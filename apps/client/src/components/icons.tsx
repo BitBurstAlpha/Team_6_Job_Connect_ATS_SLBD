@@ -1,4 +1,4 @@
-import { icons, Search, Menu } from 'lucide-react';
+import { icons, Search, Menu, ChevronDown } from 'lucide-react';
 
 import {
     Squares2X2Icon,
@@ -16,4 +16,5 @@ export const Icons = {
     gear: CogIcon,
     search: Search,
     menu: Menu,
+    chevronDown: ChevronDown,
 };

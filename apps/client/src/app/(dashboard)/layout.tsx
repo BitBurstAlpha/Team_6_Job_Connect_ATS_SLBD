@@ -7,6 +7,7 @@ import { SidebarMiniProfile } from '@/components/shared/dashboard/SidebarMiniPro
 import { Input } from '@/components/ui/input';
 import { Icons } from '@/components/icons';
 import { MobileSidebar } from '@/components/shared/dashboard/mobileSidebar';
+import { DashboardProfile } from '@/components/shared/dashboard/dashboardProfile';
 
 interface DashboardLayoutProps {
     children?: React.ReactNode;
@@ -65,7 +66,7 @@ export default async function DashboardLayout({
                         </form>
                     </div>
 
-                    <p>done</p>
+                    <DashboardProfile session={session} />
                 </header>
 
                 <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
