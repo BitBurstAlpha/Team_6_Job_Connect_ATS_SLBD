@@ -42,7 +42,7 @@ export const DashboardProfile = ({ session }: { session: User | null }) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <button className="flex items-center space-x-2 border-2 p-1 border-primary rounded-full">
+                <button className="flex items-center space-x-2 border p-1 border-neutral-400 rounded-full">
                     <Avatar>
                         <AvatarImage
                             src={session.avatar}
