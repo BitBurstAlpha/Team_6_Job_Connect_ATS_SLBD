@@ -46,7 +46,12 @@ export const Header = () => {
                         </Button>
                     </div>
                 ) : (
-                    <MiniProfile />
+                    <div className="flex space-x-2 items-center">
+                        <Button onClick={() => router.push('/dashboard')}>
+                            Go to dashboard
+                        </Button>
+                        <MiniProfile />
+                    </div>
                 )}
             </div>
         </header>
