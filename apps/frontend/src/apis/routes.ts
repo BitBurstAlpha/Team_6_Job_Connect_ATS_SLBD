@@ -8,6 +8,7 @@ const routes = {
     logoutApi: `${baseUrl}/auth/logout`,
     registerApi: `${baseUrl}/applicant/register`,
     loginApi: `${baseUrl}/auth/create-session`,
+    applyJob: `${baseUrl}/jobs/apply`,
     generic: {
         jobTypesApi: `/generic/jobs/type`,
         jobCategoriesApi: `/generic/jobs/category`,

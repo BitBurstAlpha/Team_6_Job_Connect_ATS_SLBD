@@ -1,6 +1,6 @@
 import { and, eq } from 'drizzle-orm';
 import { db } from '../db/db';
-import { jobs } from '../db/schema/jobs';
+import { appliedJobs, jobs } from '../db/schema/jobs';
 import type { NewJobs } from '../db/schema/jobs';
 
 export const getAllJobs = async () => {
@@ -59,6 +59,13 @@ export const deleteJobBySlug = async (slug: string, userId: number) => {
     await db
         .delete(jobs)
         .where(and(eq(jobs.slug, slug), eq(jobs.userId, userId)));
+};
+
+export const applyJobBySlug = async (jobId: number, userId: number) => {
+    await db.insert(appliedJobs).values({
+        jobId: jobId,
+        userId: userId,
+    });
 };
 
 export const updateJobBySlug = async (

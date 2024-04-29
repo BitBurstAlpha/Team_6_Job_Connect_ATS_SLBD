@@ -35,6 +35,18 @@ export const jobs = mysqlTable('jobs', {
     updatedAt: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),
 });
 
+export const appliedJobs = mysqlTable('appliedJobs', {
+    id: int('id').autoincrement().primaryKey(),
+    userId: int('userId').references(() => users.id),
+    jobId: int('jobId').references(() => jobs.id),
+    createdAt: timestamp('crated_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),
+});
+
+export const appliedJobsRelations = relations(appliedJobs, ({ many }) => ({
+    jobs: many(jobs),
+}));
+
 export type NewJobs = typeof jobs.$inferInsert;
 
 export const type = mysqlTable('type', {
@@ -115,5 +127,6 @@ export const jobsRelations = relations(jobs, ({ one, many }) => ({
         fields: [jobs.qualificationId],
         references: [qualification.id],
     }),
+    appliedJobs: many(appliedJobs),
     tags: many(tags),
 }));

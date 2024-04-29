@@ -1,11 +1,21 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card';
 import { Icons } from '@/components/icons';
-import { usePublicJobs } from '@/lib/api';
+import { api, usePublicJobs } from '@/lib/api';
 import DOMPurify from 'dompurify';
 import dateFormat from 'dateformat';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Button } from '../ui/button';
+import { routes } from '@/apis/routes';
+import { toast } from 'sonner';
+import axios from 'axios';
 
 export const JobCard = () => {
     const { data } = usePublicJobs();
@@ -13,6 +23,22 @@ export const JobCard = () => {
     if (!data) {
         return <p>loading</p>;
     }
+
+    const applyJobHandler = async (slug: string) => {
+        try {
+            await axios.post(
+                `${routes.applyJob}/${slug}`,
+                {},
+                {
+                    withCredentials: true,
+                },
+            );
+
+            toast.success('your are successful applied for job');
+        } catch (err) {
+            toast.error('first need to login for apply job');
+        }
+    };
 
     return (
         <>
@@ -88,6 +114,18 @@ export const JobCard = () => {
                                 />
                             </CardContent>
                         </div>
+
+                        <CardFooter>
+                            <Button
+                                onClick={(e) => {
+                                    applyJobHandler(job.slug);
+
+                                    if (e.target) e.target.disabled = true;
+                                }}
+                            >
+                                Apply job
+                            </Button>
+                        </CardFooter>
                     </Card>
                 );
             })}

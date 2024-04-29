@@ -9,6 +9,7 @@ import {
     getJobBySlug,
     deleteJobBySlug,
     updateJobBySlug,
+    applyJobBySlug,
 } from '../services/job.services';
 import { getClientById } from '../services/client.services';
 
@@ -69,6 +70,43 @@ export const getAllJobHandler = async (req: Request, res: Response) => {
         }
 
         return res.status(StatusCodes.OK).json(jobs);
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                err: err.message,
+            });
+        }
+
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            err: 'something went wrong',
+        });
+    }
+};
+
+export const applyJobHandler = async (
+    req: Request<{ slug: string }>,
+    res: Response,
+) => {
+    const slug = req.params.slug ?? '';
+
+    try {
+        if (!req.user) {
+            return res.status(StatusCodes.UNAUTHORIZED).json({
+                err: 'unauthorized',
+            });
+        }
+
+        const job = await getJobBySlug(slug);
+
+        if (!job) {
+            return res.status(StatusCodes.UNAUTHORIZED).json({
+                err: 'unauthorized',
+            });
+        }
+
+        await applyJobBySlug(job.id, req.user.id);
+
+        return res.status(StatusCodes.OK).json('job applied success');
     } catch (err: unknown) {
         if (err instanceof Error) {
             return res.status(StatusCodes.BAD_REQUEST).json({

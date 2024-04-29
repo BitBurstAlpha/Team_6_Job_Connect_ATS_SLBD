@@ -9,6 +9,7 @@ import {
     getJobBySlugHandler,
     deleteJobBySlugHandler,
     updateJobBySlugHandler,
+    applyJobHandler,
 } from '../controllers/job.controllers';
 
 const router = express.Router();
@@ -23,6 +24,12 @@ router.post(
 
 router.get('/', getAllJobHandler);
 router.get('/:slug', getJobBySlugHandler);
+router.post(
+    '/apply/:slug',
+    verifyJwt,
+    guard.check(['applicant']),
+    applyJobHandler,
+);
 router.delete(
     '/:slug',
     verifyJwt,
