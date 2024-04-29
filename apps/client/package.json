@@ -30,6 +30,7 @@
         "axios": "^1.6.8",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.0",
+        "jose": "^5.2.4",
         "lottie-react": "^2.4.0",
         "lucide-react": "^0.363.0",
         "next": "14.2.3",

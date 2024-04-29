@@ -1,11 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from '@/lib/session';
+import { cookies } from 'next/headers';
+import { JWTVerifyResult, jwtVerify } from 'jose';
+import { User } from './types';
 
 const publicRoutes = ['/login', '/signup', '/'];
 const protectedRoutes = ['/dashboard', '/account-create', '/dashboard/jobs'];
 
+const decode = async (): Promise<User | null> => {
+    try {
+        const accessToken = cookies().get('accessToken')?.value;
+
+        const session = await jwtVerify<JWTVerifyResult<User | null>>(
+            accessToken as string,
+            new TextEncoder().encode(process.env.JWT_TOKEN),
+        );
+
+        return session.payload as User;
+    } catch (err) {
+        return null;
+    }
+};
+
 export default async function middleware(req: NextRequest) {
-    const session = await getServerSession();
+    const session = await decode();
 
     const path = req.nextUrl.pathname;
     const isPublicRoute = publicRoutes.includes(path);
