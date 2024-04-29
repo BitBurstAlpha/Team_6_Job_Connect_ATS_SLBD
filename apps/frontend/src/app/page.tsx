@@ -1,3 +1,4 @@
+import { HeroSection } from '@/components/HeroSection';
 import { JobCard } from '@/components/cards/job.card';
 import { JobFilter } from '@/components/jobFilter';
 import { Header } from '@/components/shared/header';
@@ -17,6 +18,8 @@ export default async function Home() {
     return (
         <main>
             <Header />
+
+            <HeroSection />
             <div className="lg:grid grid-cols-4 gap-8 lg:px-24 py-12 max-w-[1920px] mx-auto">
                 <div className="space-y-4 bg-white p-4 rounded-sm">
                     <JobFilter
