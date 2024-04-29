@@ -6,6 +6,7 @@ const client = {
     loginApi: `${baseUrl}/auth/create-session`,
     accountCreateApi: `${baseUrl}/client/account`,
     logoutApi: `${baseUrl}/auth/logout`,
+    avatarUploadApi: `${baseUrl}/users/avatar`,
 };
 
 export { client };

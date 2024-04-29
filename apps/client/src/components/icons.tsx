@@ -1,4 +1,11 @@
-import { icons, Search, Menu, ChevronDown, Ellipsis } from 'lucide-react';
+import {
+    icons,
+    Search,
+    Menu,
+    ChevronDown,
+    Ellipsis,
+    ImageUp,
+} from 'lucide-react';
 
 import {
     Squares2X2Icon,
@@ -26,4 +33,5 @@ export const Icons = {
     edit: PencilSquareIcon,
     location: MapPinIcon,
     documentComplete: ClipboardDocumentCheckIcon,
+    ImageUpload: ImageUp,
 };
