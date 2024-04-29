@@ -45,3 +45,11 @@ export interface JobData {
     id: number;
     name: string;
 }
+
+export interface User {
+    id: number;
+    username: string;
+    role: string;
+    avatar: string;
+    isAccount: boolean;
+}
