@@ -6,6 +6,21 @@ import type { NewJobs } from '../db/schema/jobs';
 export const getAllJobs = async () => {
     const result = await db.query.jobs.findMany({
         with: {
+            user: {
+                columns: {
+                    avatar: true,
+                },
+                with: {
+                    client: {
+                        columns: {
+                            companyName: true,
+                            fullName: true,
+                            phoneNumber: true,
+                            website: true,
+                        },
+                    },
+                },
+            },
             category: {
                 columns: {
                     name: true,

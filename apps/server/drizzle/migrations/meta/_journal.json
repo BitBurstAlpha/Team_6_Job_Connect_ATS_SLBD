@@ -71,6 +71,20 @@
       "when": 1713941191720,
       "tag": "0009_panoramic_toxin",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1714348379356,
+      "tag": "0010_quick_scourge",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1714348395986,
+      "tag": "0011_glamorous_punisher",
+      "breakpoints": true
     }
   ]
 }

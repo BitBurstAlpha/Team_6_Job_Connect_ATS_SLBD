@@ -36,11 +36,16 @@ export const client = mysqlTable('client', {
     fullName: varchar('fullName', { length: 100 }).notNull(),
     phoneNumber: varchar('phoneNumber', { length: 50 }).notNull(),
     website: varchar('website', { length: 25 }),
-    userID: int('userId')
-        .references(() => users.id)
-        .unique(),
+    userID: int('userId').references(() => users.id),
     createdAt: timestamp('crated_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),
 });
+
+export const clientRelations = relations(client, ({ one }) => ({
+    user: one(users, {
+        fields: [client.userID],
+        references: [users.id],
+    }),
+}));
 
 export type NewClient = typeof client.$inferInsert;

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { toast } from 'sonner';
-import { JobResponse } from '@/types';
+import { JobResponse, User } from '@/types';
 import { routes } from '@/apis/routes';
 
 export const api = axios.create({
@@ -26,5 +26,25 @@ export const usePublicJobs = () => {
         queryFn: () => {
             return api.get(routes.jobApi);
         },
+    });
+};
+
+export const useSessionQuery = () => {
+    return useQuery<
+        | {
+              data: User;
+          }
+        | null
+        | undefined
+    >({
+        queryKey: ['current-user'],
+        queryFn: () => {
+            return axios.get(routes.currentUserApi, {
+                withCredentials: true,
+            });
+        },
+        refetchOnWindowFocus: true,
+        retry: 1,
+        retryDelay: 10000,
     });
 };

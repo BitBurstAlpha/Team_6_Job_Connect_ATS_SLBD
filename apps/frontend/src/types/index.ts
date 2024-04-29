@@ -13,6 +13,15 @@ export type JobResponse = {
     userId: number;
     createdAt: string;
     updatedAt: string;
+    user: {
+        avatar: string;
+        client: {
+            companyName: string;
+            fullName: string;
+            phoneNumber: string;
+            website?: string;
+        };
+    };
     category: {
         name: string;
     };
@@ -26,3 +35,21 @@ export type JobResponse = {
         name: string;
     };
 };
+
+export interface JobData {
+    id: number;
+    name: string;
+}
+
+export interface JobData {
+    id: number;
+    name: string;
+}
+
+export interface User {
+    id: number;
+    username: string;
+    role: string;
+    avatar: string;
+    isAccount: boolean;
+}

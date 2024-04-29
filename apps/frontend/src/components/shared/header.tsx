@@ -11,12 +11,16 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
+import { useSession } from '@/context/useSession';
+import { MiniProfile } from './profile';
 
 export const Header = () => {
     const router = useRouter();
 
+    const { user } = useSession();
+
     return (
-        <header className="m-4">
+        <header className="p-4  border-b border-zinc-200 shadow-sm">
             <div className="flex justify-between">
                 <div>
                     <Image
@@ -28,40 +32,22 @@ export const Header = () => {
                     />
                 </div>
 
-                <div>
-                    <NavigationMenu>
-                        <NavigationMenuList>
-                            <NavigationMenuItem>
-                                <NavigationMenuTrigger>
-                                    Job
-                                </NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <NavigationMenuLink></NavigationMenuLink>
-                                </NavigationMenuContent>
-                            </NavigationMenuItem>
-
-                            <NavigationMenuItem>
-                                <NavigationMenuTrigger>
-                                    For employers
-                                </NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <NavigationMenuLink></NavigationMenuLink>
-                                </NavigationMenuContent>
-                            </NavigationMenuItem>
-                        </NavigationMenuList>
-                    </NavigationMenu>
-                </div>
-
-                <div className="space-x-4">
-                    <Button onClick={() => router.push('/login')}>Login</Button>
-                    <Button
-                        variant="outline"
-                        className="border-blue-300 text-blue-600 hover:text-blue-800"
-                        onClick={() => router.push('/signup')}
-                    >
-                        Candidate SignUp
-                    </Button>
-                </div>
+                {!user ? (
+                    <div className="space-x-4">
+                        <Button onClick={() => router.push('/login')}>
+                            Login
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="border-blue-300 text-blue-600 hover:text-blue-800"
+                            onClick={() => router.push('/signup')}
+                        >
+                            Candidate SignUp
+                        </Button>
+                    </div>
+                ) : (
+                    <MiniProfile />
+                )}
             </div>
         </header>
     );
