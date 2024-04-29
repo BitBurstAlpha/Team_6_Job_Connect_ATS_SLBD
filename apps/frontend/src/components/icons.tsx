@@ -1,4 +1,4 @@
-import { icons, PoundSterling, CalendarClock } from 'lucide-react';
+import { icons, PoundSterling, CalendarClock, ChevronDown } from 'lucide-react';
 
 import { MapPinIcon, ClockIcon } from '@heroicons/react/24/outline';
 
@@ -9,4 +9,5 @@ export const Icons = {
     clock: ClockIcon,
     pound: PoundSterling,
     calendarClock: CalendarClock,
+    chevronDown: ChevronDown,
 };

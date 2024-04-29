@@ -19,7 +19,7 @@ export const getServerSession = async (): Promise<User | null> => {
 
         const user: User = await res.json();
 
-        if (user.role !== 'client') {
+        if (user.role !== 'applicant') {
             throw new Error('Unauthorized');
         }
 

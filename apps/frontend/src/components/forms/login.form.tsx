@@ -8,8 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { routes } from '@/apis/routes';
 import { useForm } from 'react-hook-form';
+import Lottie from 'lottie-react';
+import loading from '@/lottie/loading.json';
 import { toast } from 'sonner';
+import type { User } from '@/types';
 
 import {
     Form,
@@ -19,6 +23,8 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
+import { useMutation } from '@tanstack/react-query';
+import { useSession } from '@/context/useSession';
 
 const loginSchema = z.object({
     email: z.string().email(),
@@ -27,6 +33,7 @@ const loginSchema = z.object({
 
 export const LoginForm = () => {
     const router = useRouter();
+    const { refetch } = useSession();
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -36,32 +43,39 @@ export const LoginForm = () => {
         },
     });
 
-    async function onSubmit(values: z.infer<typeof loginSchema>) {
-        try {
-            const response = await axios.post(
-                'http://localhost:8000/api/auth/create-session',
+    const mutation = useMutation({
+        mutationFn: (data: z.infer<typeof loginSchema>) => {
+            return axios.post(
+                routes.loginApi,
                 {
-                    email: values.email,
-                    password: values.password,
+                    type: 'applicant',
+                    ...data,
                 },
                 {
                     withCredentials: true,
                 },
             );
+        },
+        onSuccess: (data: { data: User }) => {
+            toast.success(
+                `Hello! ${data.data.username}. 🎉 You're in! Welcome back to your account. 🎉`,
+            );
+            refetch();
+            router.push('/');
+        },
+        onError: (err) => {
+            toast.error('Please double-check your credentials and try again');
+        },
+    });
 
-            if (response.status == 200) {
-                toast.success('login success');
-                router.push('/');
-            }
-        } catch (error: unknown) {
-            toast.error('login fail');
-        }
+    async function onSubmit(values: z.infer<typeof loginSchema>) {
+        mutation.mutate(values);
     }
 
     return (
         <Form {...form}>
-            <div className="w-1/2">
-                <div className="bg-white max-w-lg py-16 px-20 mx-auto rounded-xl shadow space-y-4">
+            <div>
+                <div className="bg-white py-16 px-20 mx-auto rounded-xl shadow space-y-4">
                     <div className="w-full">
                         <h2 className="text-3xl font-medium text-center">
                             Hello Again!
@@ -99,6 +113,7 @@ export const LoginForm = () => {
                                         <FormControl>
                                             <Input
                                                 placeholder="password"
+                                                type="password"
                                                 {...field}
                                             />
                                         </FormControl>
@@ -133,14 +148,24 @@ export const LoginForm = () => {
 
                         <div className="w-full">
                             <Button type="submit" size="lg" className="w-full">
-                                Login
+                                {mutation.isPending ? (
+                                    <Lottie
+                                        animationData={loading}
+                                        loop
+                                        className="text-white"
+                                    />
+                                ) : (
+                                    'Login'
+                                )}
                             </Button>
                         </div>
                     </form>
 
                     <div className="flex w-full">
                         <div className="mx-auto flex space-x-2">
-                            <p className="">New Job Seeker?</p>
+                            <p className="">
+                                don&apos;t have an client account?
+                            </p>
                             <Link href="/signup" className="text-blue-600">
                                 Signup
                             </Link>

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
+import { useMutation } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import axios from 'axios';
+import { routes } from '@/apis/routes';
 import { toast } from 'sonner';
 import {
     Form,
@@ -19,12 +20,15 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
+import Lottie from 'lottie-react';
+import loading from '@/lottie/loading.json';
 
 const signupSchema = z.object({
     username: z.string().min(1),
     email: z.string().email(),
     password: z.string().min(6),
     confirmPassword: z.string().min(6),
+    isAgreed: z.literal(true),
 });
 
 export const SignupForm = () => {
@@ -40,35 +44,26 @@ export const SignupForm = () => {
         },
     });
 
-    async function onSubmit(values: z.infer<typeof signupSchema>) {
-        try {
-            const response = await axios.post(
-                'http://localhost:8000/api/users/register',
-                {
-                    username: values.username,
-                    email: values.email,
-                    password: values.password,
-                    confirmPassword: values.confirmPassword,
-                },
+    const mutation = useMutation({
+        mutationFn: (data: z.infer<typeof signupSchema>) => {
+            return axios.post(routes.registerApi, data);
+        },
+        onSuccess: () => {
+            toast.success(
+                '🎉 Your registration is complete. Welcome aboard! 🎉',
             );
+            router.push('/login');
+        },
+    });
 
-            if (response.status == 201) {
-                toast.success('register success');
-                router.push('/');
-            }
-        } catch (error: unknown) {
-            if (error instanceof Error) {
-                toast.error(JSON.stringify(error));
-            } else {
-                toast.error('register fail');
-            }
-        }
+    async function onSubmit(values: z.infer<typeof signupSchema>) {
+        mutation.mutate(values);
     }
 
     return (
         <Form {...form}>
-            <div className="w-1/2">
-                <div className="bg-white max-w-lg py-16 px-20 mx-auto rounded-xl shadow space-y-4">
+            <div>
+                <div className="bg-white w-full py-16 px-20 mx-auto rounded-xl shadow space-y-4">
                     <div className="w-full">
                         <h2 className="text-3xl font-medium text-center">
                             Sign Up
@@ -156,26 +151,60 @@ export const SignupForm = () => {
                             />
                         </div>
 
-                        <div className="flex items-center w-full">
-                            <div className="items-top flex space-x-2 flex-1">
-                                <Checkbox id="remember" />
-                                <div className="grid gap-1.5 leading-none">
-                                    <label
-                                        htmlFor="remember"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        I&apos;m agree with the Terms &
-                                        conditions
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                        <FormField
+                            name="isAgreed"
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <div className="flex items-center w-full space-x-2">
+                                            <Checkbox
+                                                id="remember"
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+
+                                            <div className="items-top flex space-x-2 flex-1">
+                                                <div className="grid gap-1.5 leading-none">
+                                                    <label
+                                                        htmlFor="remember"
+                                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                                    >
+                                                        I&apos;m agree with the
+                                                        Terms & conditions
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
                         <div className="w-full">
-                            <Button size="lg" className="w-full">
-                                Signup
+                            <Button
+                                disabled={mutation.isPending}
+                                size="lg"
+                                className="w-full"
+                            >
+                                {mutation.isPending ? (
+                                    <Lottie
+                                        animationData={loading}
+                                        loop
+                                        className="text-white"
+                                    />
+                                ) : (
+                                    'Signup'
+                                )}
                             </Button>
                         </div>
+
+                        {mutation.isError ? (
+                            <div className="text-sm text-red-500">
+                                An error occurred: {mutation.error.message}
+                            </div>
+                        ) : null}
                     </form>
 
                     <div className="flex w-full">
