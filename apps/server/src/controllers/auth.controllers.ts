@@ -60,7 +60,7 @@ export const userLoginHandler = async (
         httpOnly: true,
         sameSite: config.NODE_ENV === 'production' ? 'none' : 'strict',
         secure: config.NODE_ENV === 'production',
-        domain: config.NODE_ENV === 'production' ? '.sldb.uk' : 'localhost',
+        domain: config.NODE_ENV === 'production' ? '.slbd.uk' : 'localhost',
     });
 
     return res.status(StatusCodes.OK).json({
