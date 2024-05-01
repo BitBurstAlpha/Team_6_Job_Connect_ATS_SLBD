@@ -8,7 +8,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Icons } from '@/components/icons';
-import { api, usePublicJobs } from '@/lib/api';
+import { usePublicJobs } from '@/lib/api';
 import DOMPurify from 'dompurify';
 import dateFormat from 'dateformat';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
@@ -119,8 +119,6 @@ export const JobCard = () => {
                             <Button
                                 onClick={(e) => {
                                     applyJobHandler(job.slug);
-
-                                    if (e.target) e.target.disabled = true;
                                 }}
                             >
                                 Apply job
