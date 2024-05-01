@@ -11,6 +11,7 @@ export const getServerSession = async (): Promise<User | null> => {
             headers: {
                 Authorization: `Bearer ${cookies().get('accessToken')?.value}`,
             },
+            cache: 'no-store',
         });
 
         if (!res.ok) {
