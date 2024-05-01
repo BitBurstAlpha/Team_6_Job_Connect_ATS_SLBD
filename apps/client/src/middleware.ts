@@ -7,6 +7,8 @@ const protectedRoutes = ['/dashboard', '/account-create', '/dashboard/jobs'];
 export default async function middleware(req: NextRequest) {
     const session = await getServerSession();
 
+    console.log('test' + req.cookies.get('accessToken'));
+
     const path = req.nextUrl.pathname;
     const isPublicRoute = publicRoutes.includes(path);
     const isProtectedRoute = protectedRoutes.includes(path);
