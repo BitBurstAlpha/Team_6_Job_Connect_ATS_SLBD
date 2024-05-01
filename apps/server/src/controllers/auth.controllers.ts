@@ -58,6 +58,7 @@ export const userLoginHandler = async (
         maxAge: 604800000,
         path: '/',
         httpOnly: true,
+        sameSite: config.NODE_ENV === 'production' ? 'none' : 'strict',
         secure: config.NODE_ENV === 'production',
     });
 

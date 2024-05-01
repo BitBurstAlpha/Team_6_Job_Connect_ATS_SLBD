@@ -1,3 +1,5 @@
+'use server';
+
 import 'server-only';
 import { cookies } from 'next/headers';
 import { auth } from '@api/auth.apis';
@@ -5,11 +7,13 @@ import { User } from '@/types';
 
 export const getServerSession = async (): Promise<User | null> => {
     try {
+        const accessToken = cookies().get('accessToken')?.value;
+
         const res: Response = await fetch(auth.currentUserApi, {
             credentials: 'include',
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${cookies().get('accessToken')?.value}`,
+                Authorization: `Bearer ${accessToken}`,
             },
             cache: 'no-store',
         });
