@@ -108,8 +108,9 @@ export const logoutHandler = (req: Request, res: Response) => {
         maxAge: 0,
         path: '/',
         httpOnly: true,
-        sameSite: 'strict',
+        sameSite: config.NODE_ENV === 'production' ? 'none' : 'strict',
         secure: config.NODE_ENV === 'production',
+        domain: config.NODE_ENV === 'production' ? '.slbd.uk' : 'localhost',
     });
 
     return res.status(StatusCodes.OK).json({
