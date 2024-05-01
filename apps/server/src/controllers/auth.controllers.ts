@@ -54,18 +54,13 @@ export const userLoginHandler = async (
         },
     );
 
-    const domainBase = type === 'client' ? 'client' : 'www';
-
     res.cookie('accessToken', accessToken, {
         maxAge: 604800000,
         path: '/',
         httpOnly: true,
         sameSite: config.NODE_ENV === 'production' ? 'none' : 'strict',
         secure: config.NODE_ENV === 'production',
-        domain:
-            config.NODE_ENV === 'production'
-                ? `${domainBase}.slbd.uk`
-                : 'localhost',
+        domain: config.NODE_ENV === 'production' ? '.slbd.uk' : 'localhost',
     });
 
     return res.status(StatusCodes.OK).json({
