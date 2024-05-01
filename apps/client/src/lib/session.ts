@@ -15,13 +15,13 @@ export const getServerSession = async (): Promise<User | null> => {
         });
 
         if (!res.ok) {
-            throw new Error('Unauthorized');
+            throw new Error('Unauthorized' + res.json);
         }
 
         const user: User = await res.json();
 
         if (user.role !== 'client') {
-            throw new Error('Unauthorized');
+            throw new Error('user not client - Unauthorized');
         }
 
         return user;
