@@ -5,7 +5,7 @@ import { User } from '@/types';
 
 export const getServerSession = async (): Promise<User | null> => {
     try {
-        const accessToken = cookies().get('clientAccessToken')?.value;
+        const accessToken = cookies().get('accessToken')?.value;
 
         const res: Response = await fetch(auth.currentUserApi, {
             credentials: 'include',

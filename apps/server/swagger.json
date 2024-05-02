@@ -213,7 +213,7 @@
                 }
             }
         },
-        "/api/auth/client/current-user": {
+        "/api/auth/current-user": {
             "get": {
                 "tags": ["Auth"],
                 "description": "user session",
@@ -253,46 +253,7 @@
                 }
             }
         },
-        "/api/auth/applicant/current-user": {
-            "get": {
-                "tags": ["Auth"],
-                "description": "user session",
-                "responses": {
-                    "200": {
-                        "description": "get current applicant user session",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "user": {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "number"
-                                                },
-                                                "email": {
-                                                    "type": "string"
-                                                },
-                                                "role": {
-                                                    "type": "string"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "400": {
-                        "description": "Bad Request"
-                    }
-                }
-            }
-        },
+
         "/api/auth/logout": {
             "post": {
                 "tags": ["Auth"],

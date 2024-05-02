@@ -14,16 +14,9 @@ const router = express.Router();
 router.post('/create-session', validator(LoginUserSchema), userLoginHandler);
 
 router.get(
-    '/client/current-user',
+    '/current-user',
     verifyJwt,
-    guard.check(['client']),
-    getCurrentUser,
-);
-
-router.get(
-    '/applicant/current-user',
-    verifyJwt,
-    guard.check(['applicant']),
+    guard.check([['client'], ['applicant']]),
     getCurrentUser,
 );
 

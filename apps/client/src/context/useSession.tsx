@@ -28,9 +28,15 @@ function SessionContextProvider({
 }) {
     const { data, isLoading: isSessionLoading, refetch } = useSessionQuery();
 
+    let currentUser: User | null = null;
+
+    if (data?.data.role === 'client') {
+        currentUser = data.data;
+    }
+
     return (
         <SessionContext.Provider
-            value={{ user: data?.data ?? session, refetch, isSessionLoading }}
+            value={{ user: currentUser ?? session, refetch, isSessionLoading }}
         >
             {children}
         </SessionContext.Provider>

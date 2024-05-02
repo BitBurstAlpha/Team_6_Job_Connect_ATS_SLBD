@@ -54,18 +54,14 @@ export const userLoginHandler = async (
         },
     );
 
-    res.cookie(
-        type === 'client' ? 'clientAccessToken' : 'accessToken',
-        accessToken,
-        {
-            maxAge: 604800000,
-            path: '/',
-            httpOnly: true,
-            sameSite: config.NODE_ENV === 'production' ? 'none' : 'strict',
-            secure: config.NODE_ENV === 'production',
-            domain: config.NODE_ENV === 'production' ? '.slbd.uk' : 'localhost',
-        },
-    );
+    res.cookie('accessToken', accessToken, {
+        maxAge: 604800000,
+        path: '/',
+        httpOnly: true,
+        sameSite: config.NODE_ENV === 'production' ? 'none' : 'strict',
+        secure: config.NODE_ENV === 'production',
+        domain: config.NODE_ENV === 'production' ? '.slbd.uk' : 'localhost',
+    });
 
     return res.status(StatusCodes.OK).json({
         id: user.id,
