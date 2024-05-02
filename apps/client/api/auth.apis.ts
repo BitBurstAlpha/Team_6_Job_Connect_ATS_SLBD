@@ -1,7 +1,7 @@
 import { baseUrl } from './index';
 
 const auth = {
-    currentUserApi: `${baseUrl}/auth/current-user`,
+    currentUserApi: `${baseUrl}/auth/client/current-user`,
 };
 
 export { auth };

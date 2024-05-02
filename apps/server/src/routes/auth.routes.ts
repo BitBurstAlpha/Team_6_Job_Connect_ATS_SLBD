@@ -14,11 +14,19 @@ const router = express.Router();
 router.post('/create-session', validator(LoginUserSchema), userLoginHandler);
 
 router.get(
-    '/current-user',
+    'client/current-user',
     verifyJwt,
-    guard.check([['client'], ['applicant']]),
+    guard.check(['client']),
     getCurrentUser,
 );
+
+router.get(
+    'applicant/current-user',
+    verifyJwt,
+    guard.check(['applicant']),
+    getCurrentUser,
+);
+
 router.post('/logout', verifyJwt, logoutHandler);
 
 export default router;
