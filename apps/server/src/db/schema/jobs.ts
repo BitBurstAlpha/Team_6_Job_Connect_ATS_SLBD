@@ -4,6 +4,7 @@ import {
     varchar,
     timestamp,
     text,
+    primaryKey,
 } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { users } from './users';
@@ -35,13 +36,20 @@ export const jobs = mysqlTable('jobs', {
     updatedAt: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),
 });
 
-export const appliedJobs = mysqlTable('appliedJobs', {
-    id: int('id').autoincrement().primaryKey(),
-    userId: int('userId').references(() => users.id),
-    jobId: int('jobId').references(() => jobs.id),
-    createdAt: timestamp('crated_at').defaultNow().notNull(),
-    updatedAt: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),
-});
+export const appliedJobs = mysqlTable(
+    'appliedJobs',
+    {
+        userId: int('userId').references(() => users.id),
+        jobId: int('jobId').references(() => jobs.id),
+        createdAt: timestamp('crated_at').defaultNow().notNull(),
+        updatedAt: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),
+    },
+    (table) => {
+        return {
+            pk: primaryKey({ columns: [table.userId, table.jobId] }),
+        };
+    },
+);
 
 export const appliedJobsRelations = relations(appliedJobs, ({ many }) => ({
     jobs: many(jobs),

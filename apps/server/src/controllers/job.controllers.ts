@@ -109,6 +109,12 @@ export const applyJobHandler = async (
         return res.status(StatusCodes.OK).json('job applied success');
     } catch (err: unknown) {
         if (err instanceof Error) {
+            if (err.message.startsWith('Duplicate entry')) {
+                return res.status(StatusCodes.CONFLICT).json({
+                    err: err.message,
+                });
+            }
+
             return res.status(StatusCodes.BAD_REQUEST).json({
                 err: err.message,
             });
