@@ -13,7 +13,6 @@ import routes from './src/routes';
 import { logger } from './src/utils/logger';
 import { ValidateEnv } from './src/utils/validateEnv';
 import { StatusCodes } from 'http-status-codes';
-import path from 'path';
 
 ValidateEnv();
 
@@ -36,7 +35,7 @@ app.use(cookieParser());
 app.use(morgan('tiny'));
 
 // Serve static files
-app.use('/uploads', express.static(path.join(__dirname, 'public/images')));
+app.use('/uploads', express.static('./public/images'));
 
 // Api Endpoints
 app.use('/api', routes);
