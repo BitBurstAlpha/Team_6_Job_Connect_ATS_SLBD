@@ -16,8 +16,6 @@ export const getServerSession = async (): Promise<User | null> => {
             cache: 'no-store',
         });
 
-        console.log(`Bearer ${cookies().get('clientAccessToken')?.value}`);
-
         if (!res.ok) {
             throw new Error('Unauthorized');
         }
