@@ -20,6 +20,8 @@ import { useSession } from '@/context/useSession';
 export const AvatarUpload = () => {
     const { refetch, user } = useSession();
 
+    const [loading, setLoading] = useState<boolean>(false);
+
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const [image, setImage] = useState<string | ArrayBuffer | null>(
@@ -53,6 +55,8 @@ export const AvatarUpload = () => {
         formData.append('avatar', avatarFile as any);
 
         try {
+            setLoading(true);
+
             await axios.patch(client.avatarUploadApi, formData, {
                 withCredentials: true,
             });
@@ -62,6 +66,8 @@ export const AvatarUpload = () => {
             toast.success('avatar upload successful 🎉');
         } catch (err) {
             toast.error('error while uploading avatar');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -99,11 +105,12 @@ export const AvatarUpload = () => {
             </CardContent>
             <CardFooter className="border-t px-6 py-4">
                 <Button
+                    disabled={loading}
                     className="ml-auto"
                     type="submit"
                     onClick={handleImageUpload}
                 >
-                    Save
+                    {loading ? 'Loading' : 'Save'}
                 </Button>
             </CardFooter>
         </Card>
