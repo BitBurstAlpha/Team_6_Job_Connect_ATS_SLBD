@@ -8,7 +8,6 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Icons } from '@/components/icons';
-import { usePublicJobs } from '@/lib/api';
 import DOMPurify from 'dompurify';
 import dateFormat from 'dateformat';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';

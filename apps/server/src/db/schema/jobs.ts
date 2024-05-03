@@ -51,8 +51,15 @@ export const appliedJobs = mysqlTable(
     },
 );
 
-export const appliedJobsRelations = relations(appliedJobs, ({ many }) => ({
-    jobs: many(jobs),
+export const appliedJobsRelations = relations(appliedJobs, ({ one }) => ({
+    user: one(users, {
+        fields: [appliedJobs.userId],
+        references: [users.id],
+    }),
+    job: one(jobs, {
+        fields: [appliedJobs.jobId],
+        references: [jobs.id],
+    }),
 }));
 
 export type NewJobs = typeof jobs.$inferInsert;

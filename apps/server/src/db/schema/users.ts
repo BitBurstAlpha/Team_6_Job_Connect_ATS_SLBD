@@ -7,7 +7,7 @@ import {
     mysqlEnum,
     timestamp,
 } from 'drizzle-orm/mysql-core';
-import { jobs } from './jobs';
+import { appliedJobs, jobs } from './jobs';
 
 export const users = mysqlTable('users', {
     id: int('id').autoincrement().primaryKey(),
@@ -41,11 +41,12 @@ export const client = mysqlTable('client', {
     updatedAt: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),
 });
 
-export const clientRelations = relations(client, ({ one }) => ({
+export const clientRelations = relations(client, ({ one, many }) => ({
     user: one(users, {
         fields: [client.userID],
         references: [users.id],
     }),
+    appliedJobs: many(appliedJobs),
 }));
 
 export type NewClient = typeof client.$inferInsert;

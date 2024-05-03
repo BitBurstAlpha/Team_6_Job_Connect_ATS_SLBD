@@ -29,6 +29,20 @@ export const usePublicJobs = () => {
     });
 };
 
+export const useGetAppliedJobs = () => {
+    return useQuery<{
+        data: {
+            job: JobResponse;
+            user: User;
+        }[];
+    } | null>({
+        queryKey: ['applied-jobs'],
+        queryFn: () => {
+            return api.get(routes.appliedJobs);
+        },
+    });
+};
+
 export const useSessionQuery = () => {
     return useQuery<
         | {

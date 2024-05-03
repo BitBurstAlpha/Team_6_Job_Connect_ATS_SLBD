@@ -9,13 +9,13 @@ export const dashboardConfig: DashboardConfig = {
         },
         {
             title: 'Applied Jobs',
-            href: '/dashboard/jobs',
+            href: '/dashboard/applied-jobs',
             icon: 'briefcase',
         },
         {
-            title: 'Profile',
-            href: '/dashboard/profile',
-            icon: 'users',
+            title: 'Settings',
+            href: '/dashboard/settings',
+            icon: 'gear',
         },
     ],
 };

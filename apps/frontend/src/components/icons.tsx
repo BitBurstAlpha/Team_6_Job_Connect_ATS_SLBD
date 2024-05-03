@@ -5,6 +5,7 @@ import {
     ChevronDown,
     MenuIcon,
     Search,
+    ImageUp,
 } from 'lucide-react';
 
 import {
@@ -36,4 +37,5 @@ export const Icons = {
     documentComplete: ClipboardDocumentCheckIcon,
     menu: MenuIcon,
     search: Search,
+    ImageUpload: ImageUp,
 };

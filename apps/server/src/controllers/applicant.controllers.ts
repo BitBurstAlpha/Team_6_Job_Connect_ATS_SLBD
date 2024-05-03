@@ -4,6 +4,7 @@ import sendEmail from '../utils/mail';
 
 import { getUserByEmail } from '../services/user.services';
 import { createUser } from '../services/user.services';
+import { getCurrentUserAppliedJobs } from '../services/applicant.services';
 import { RegisterUserInput } from '../schemas/user.schema';
 import { passwordHash } from '../utils/hashing';
 
@@ -49,6 +50,32 @@ export const CandidateRegisterHandler = async (
 
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             msg: 'something went wrong',
+        });
+    }
+};
+
+export const getAllAppliedJobsHandler = async (req: Request, res: Response) => {
+    try {
+        const user = await getUserByEmail(req.user.email);
+
+        if (!user) {
+            return res.status(StatusCodes.UNAUTHORIZED).json({
+                err: 'unauthorized',
+            });
+        }
+
+        const jobs = await getCurrentUserAppliedJobs(user.id);
+
+        return res.status(StatusCodes.OK).json(jobs);
+    } catch (err) {
+        if (err instanceof Error) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                err: err.message,
+            });
+        }
+
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            err: 'something went wrong',
         });
     }
 };
